@@ -1,0 +1,11 @@
+Task CiscoOppgave1{
+Task hah {
+hostname
+
+
+interface[
+trunk=true
+
+]
+
+}
