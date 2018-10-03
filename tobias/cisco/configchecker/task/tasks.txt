@@ -1,11 +1,10 @@
 Task CiscoOppgave1{
-Task hah {
 hostname
+ip
+vlans[10,20,30]
+trunk[10,20,30]
 
-
-interface[
-trunk=true
-
-]
-
+}
+Task CiscoOppgave2{
+hostname
 }
