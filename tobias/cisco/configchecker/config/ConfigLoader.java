@@ -1,18 +1,22 @@
 package com.tobias.cisco.configchecker.config;
 
+
 import java.io.*;
+import java.util.ArrayList;
 
 public class ConfigLoader {
-    Config config;
+    private Config config;
+    private BufferedReader reader;
 
     public void load(File configFile){
         //Todo try with resources.
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(configFile));
+            reader = new BufferedReader(new FileReader(configFile));
             this.config = new Config(configFile.getName());
             String line;
             while((line = reader.readLine()) != null){
-
+                System.out.println(line);
+                parseAndAddLines(line);
             }
         }catch (FileNotFoundException e){
             //Todo logger
@@ -21,15 +25,31 @@ public class ConfigLoader {
         }
     }
 
-    private void parseAndAddLines(String line){
-        if (!line.equals("!") || !line.contains("version 1")){
-            if(line.startsWith("interface"))
-            config.addLine(line);
+    private void parseAndAddLines(String line) throws IOException{
+        if (!line.equals("!")){
+            if(line.startsWith("interface") && !((line = reader.readLine())).equals("!")){
+                parseInterface(line);
+            }
+            else {
+                config.addLine(line);
+            }
         }
+        }
+
+    private void parseInterface(String line)throws IOException {
+        System.out.println(line);
+       // String faName = line.substring(line.indexOf("interface"));
+        ArrayList<String> portPropList = null;
+        while(!(line = reader.readLine()).equals("!")){
+            String temp = line.trim();
+            portPropList = new ArrayList<>();
+            portPropList.add(temp);
+        }
+        config.setInterfaceProperties("test",portPropList);
     }
 
-    private void parseInterface(String line){
-
+    public void getconfig(){
+        config.printLines();
     }
 
 }

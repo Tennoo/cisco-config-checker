@@ -47,7 +47,6 @@ public class TaskLoader {
         }
     }
     private String parseName(String line) {
-
         return line.substring(5, line.length() - 1);
     }
 
