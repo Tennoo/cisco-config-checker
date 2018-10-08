@@ -29,10 +29,13 @@ public class Config {
         this.interfaceProperties.put(faPort,portConfig);
     }
 
+
+
     public void printLines(){
         for(String s: lines){
             System.out.println(s);
         }
     }
 
+    public
 }

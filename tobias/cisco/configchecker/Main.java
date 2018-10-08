@@ -1,14 +1,10 @@
 package com.tobias.cisco.configchecker;
-
 import com.tobias.cisco.configchecker.gui.MainWindowController;
-import com.tobias.cisco.configchecker.task.TaskLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import static javafx.application.Application.launch;
 
 public class Main extends Application {
 

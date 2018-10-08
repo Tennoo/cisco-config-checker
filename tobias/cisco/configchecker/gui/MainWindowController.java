@@ -14,14 +14,16 @@ public class MainWindowController {
     private Button selectFile;
 
     private static Stage stage;
-    private File configFile;
+    private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch2_running-config.txt");
 
 
 
     private FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
-
+        ConfigLoader configLoader = new ConfigLoader();
+        configLoader.load(configFile);
+       // configLoader.getconfig();
     }
 
     public static void setStageInstance(Stage stageInstance) {
@@ -29,11 +31,11 @@ public class MainWindowController {
     }
 
     public void onSelectFileClick(){
-        fileChooser.setTitle("Open Config File");
-        this.configFile = fileChooser.showOpenDialog(stage);
-        ConfigLoader configLoader = new ConfigLoader();
-        configLoader.load(configFile);
-        configLoader.getconfig();
+      //  fileChooser.setTitle("Open Config File");
+       // this.configFile = fileChooser.showOpenDialog(stage);
+       // ConfigLoader configLoader = new ConfigLoader();
+        //configLoader.load(configFile);
+        //configLoader.getconfig();
     }
 
 }
