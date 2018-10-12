@@ -1,9 +1,6 @@
 package com.tobias.cisco.configchecker.config;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Config {
 
@@ -29,21 +26,6 @@ public class Config {
 
     protected void setInterfaceProperties(String faPort, ArrayList<String> portConfig){
         this.interfaceProperties.put(faPort,portConfig);
-    }
-
-    public void printInterface(){
-        for(String s:interfaceProperties.keySet()){
-            System.out.println(s);
-        }
-
-    }
-
-
-
-    public void printLines(){
-        for(String s: lines){
-            System.out.println(s);
-        }
     }
 
     protected void setVlanProperties(String vlan, ArrayList<String> subcommands){

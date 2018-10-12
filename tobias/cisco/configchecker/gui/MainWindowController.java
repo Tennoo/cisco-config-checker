@@ -14,7 +14,7 @@ public class MainWindowController {
     private Button selectFile;
 
     private static Stage stage;
-    private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch2_running-config.txt");
+    private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch0_startup-config.txt");
 
 
 

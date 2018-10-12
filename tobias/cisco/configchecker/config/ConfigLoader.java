@@ -14,7 +14,7 @@ public class ConfigLoader {
             this.reader = new BufferedReader(new FileReader(configFile));
             this.config = new Config(configFile.getName());
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && !line.equals("")) {
                 // System.out.println(line);
                 parseAndAddLines(line);
             }
@@ -23,7 +23,6 @@ public class ConfigLoader {
         } catch (IOException e) {
             //Todo logger
         }
-        config.printInterface();
     }
 
     private void parseAndAddLines(String line) throws IOException {
@@ -31,7 +30,7 @@ public class ConfigLoader {
             if (line.startsWith("interface") && !line.startsWith("interface Vlan")) {
                 parseInterface(line);
             } else if (line.startsWith("interface Vlan")){
-
+                parseVlan(line);
             } else{
                 config.addLine(line);
             }
@@ -49,10 +48,13 @@ public class ConfigLoader {
         config.setInterfaceProperties(faName, portPropList);
     }
 
-    private void parseVlan
-
-    public void getconfig() {
-        config.printLines();
+    private void parseVlan(String line) throws IOException{
+        String vlanName = line.substring(10);
+        ArrayList<String> vlanSubCommands = new ArrayList<>();
+        while(!(line =reader.readLine()).startsWith("interface") && !line.equals("!")){
+            String trimmedLine = line.trim();
+            vlanSubCommands.add(trimmedLine);
+        }
+        config.setVlanProperties(vlanName,vlanSubCommands);
     }
-
 }
