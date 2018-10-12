@@ -23,6 +23,7 @@ public class MainWindowController {
     public void initialize() {
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
+
        // configLoader.getconfig();
     }
 

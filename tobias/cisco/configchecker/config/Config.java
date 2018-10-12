@@ -10,9 +10,11 @@ public class Config {
     private List<String> lines;
     private String name;
     private Map<String, ArrayList<String>> interfaceProperties;
+    private  Map<String, ArrayList<String>> vlanProperties;
 
     protected Config(String name){
         this.interfaceProperties = new HashMap<>();
+        this.vlanProperties = new HashMap<>();
         this.lines = new ArrayList<>();
         this.name = name;
     }
@@ -29,6 +31,13 @@ public class Config {
         this.interfaceProperties.put(faPort,portConfig);
     }
 
+    public void printInterface(){
+        for(String s:interfaceProperties.keySet()){
+            System.out.println(s);
+        }
+
+    }
+
 
 
     public void printLines(){
@@ -37,5 +46,8 @@ public class Config {
         }
     }
 
-    public
+    protected void setVlanProperties(String vlan, ArrayList<String> subcommands){
+        this.vlanProperties.put(vlan,subcommands);
+    }
+
 }

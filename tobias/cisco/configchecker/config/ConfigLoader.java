@@ -23,13 +23,16 @@ public class ConfigLoader {
         } catch (IOException e) {
             //Todo logger
         }
+        config.printInterface();
     }
 
     private void parseAndAddLines(String line) throws IOException {
         if (!line.equals("!")) {
-            if (line.startsWith("interface")) {
+            if (line.startsWith("interface") && !line.startsWith("interface Vlan")) {
                 parseInterface(line);
-            } else {
+            } else if (line.startsWith("interface Vlan")){
+
+            } else{
                 config.addLine(line);
             }
         }
@@ -43,8 +46,10 @@ public class ConfigLoader {
             portPropList.add(trimmedLine);
             System.out.println(trimmedLine);
         }
-        config.setInterfaceProperties("test", portPropList);
+        config.setInterfaceProperties(faName, portPropList);
     }
+
+    private void parseVlan
 
     public void getconfig() {
         config.printLines();
