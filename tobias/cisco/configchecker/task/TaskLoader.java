@@ -53,34 +53,27 @@ public class TaskLoader {
         return line.substring(5, line.length() - 1);
     }
 
-    private void parseAndAddTask(String line){
+    private void parseAndAddTask(String line) throws  IOException{
         Task task = new Task(parseName(line));
 
-        //Todo check whitespace
         //Todo logic cleanup
         //Todo error handling when no "}"
         //Todo kommentarer
         //Todo end of file reading error
-        try {
-            while (!(line = reader.readLine()).startsWith("Task") && !line.equals("}"))
-                if (line.startsWith("vlans")) {
-                    task.setVlanProperties(parseProperties(line));
-                } else if (line.startsWith("trunk")) {
-                    task.setTrunkProperties(parseProperties(line));
-                } else if (!line.equals("")) {
-                    task.addTaskCommand(new Command(line));
-                } else if(line == null){
-                    throw new CorruptTaskFileException("Reached end of file while reading task:" + task.getName());
-                }
-            tasksList.add(task);
-        }catch (CorruptTaskFileException e){
-            e.getMessage();
-        }catch (IOException e){
-            e.getMessage();
+
+        while (!(line = reader.readLine()).startsWith("Task") && !line.equals("}")) {
+            if (line.startsWith("vlans")) {
+                task.setVlanProperties(parseProperties(line));
+            } else if (line.startsWith("trunk")) {
+                task.setTrunkProperties(parseProperties(line));
+            } else if (!line.equals("") || !line.startsWith("//")) {
+                task.addTaskCommand(new Command(line));
+            }
+
         }
+        tasksList.add(task);
 
     }
-
     private List<Integer> parseProperties(String line) {
         String temp = line.substring(line.indexOf("[") + 1, line.length() - 1);
         List<String> tempList = Arrays.asList(temp.split(",[ ]*"));

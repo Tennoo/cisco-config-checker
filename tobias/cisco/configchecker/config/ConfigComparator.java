@@ -2,6 +2,9 @@ package com.tobias.cisco.configchecker.config;
 
 import com.tobias.cisco.configchecker.task.Task;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ConfigComparator {
     private Task task;
     private Config config;
@@ -23,7 +26,9 @@ public class ConfigComparator {
 
     }
 
-    private void compareInterface(){
+    private boolean compareInterface(){
+        Map interfaces = config.getInterfaceProperties();
+
 
 
     }
