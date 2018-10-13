@@ -15,13 +15,23 @@ public class ConfigLoader {
             this.config = new Config(configFile.getName());
             String line;
             while ((line = reader.readLine()) != null && !line.equals("")) {
-                // System.out.println(line);
                 parseAndAddLines(line);
             }
-        } catch (FileNotFoundException e) {
+        }
+
+        catch (FileNotFoundException e) {
             //Todo logger
         } catch (IOException e) {
             //Todo logger
+        }
+        finally {
+            try {
+                reader.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            } catch (Exception e){
+                //Todo logger
+            }
         }
     }
 

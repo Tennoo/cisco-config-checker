@@ -1,6 +1,7 @@
 package com.tobias.cisco.configchecker.gui;
 
 import com.tobias.cisco.configchecker.config.ConfigLoader;
+import com.tobias.cisco.configchecker.task.TaskLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
@@ -23,6 +24,8 @@ public class MainWindowController {
     public void initialize() {
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
+        TaskLoader taskLoader = new TaskLoader();
+        taskLoader.load();
 
        // configLoader.getconfig();
     }

@@ -1,5 +1,8 @@
 package com.tobias.cisco.configchecker.task;
 
+import com.tobias.cisco.configchecker.exceptions.CorruptTaskFileException;
+
+
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.stream.Collectors;
 public class TaskLoader {
     private File taskFile;
     private List<Task> tasksList;
+    private BufferedReader reader;
 
 
     public TaskLoader() {
@@ -22,14 +26,13 @@ public class TaskLoader {
 
 
     public void load() {
-        BufferedReader taskReader = null;
         // TODO Try with resources
         try {
-            taskReader = new BufferedReader(new FileReader(taskFile));
+            reader = new BufferedReader(new FileReader(taskFile));
             String line;
-            while ((line = taskReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Task")) {
-                    parseAndAddTask(line, taskReader);
+                    parseAndAddTask(line);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -37,7 +40,7 @@ public class TaskLoader {
         } catch (IOException e) {
         } finally {
             try {
-                taskReader.close();
+                reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }catch (NullPointerException e){
@@ -50,7 +53,7 @@ public class TaskLoader {
         return line.substring(5, line.length() - 1);
     }
 
-    private void parseAndAddTask(String line, BufferedReader reader) throws IOException{
+    private void parseAndAddTask(String line){
         Task task = new Task(parseName(line));
 
         //Todo check whitespace
@@ -58,28 +61,24 @@ public class TaskLoader {
         //Todo error handling when no "}"
         //Todo kommentarer
         //Todo end of file reading error
-        line = reader.readLine();
-        boolean hasMore = line != null;
-        while(hasMore){
-            if(line.startsWith("vlans")){
-                task.setVlanProperties(parseProperties(line));
-            }
-            else if(line.startsWith("trunk")){
-                task.setTrunkProperties(parseProperties(line));
-            }
-            else if(line.equals("}")){
-                hasMore = false;
-            }
-            else {
-                task.addTaskCommand(new Command(line));
-
-            }
-            if(hasMore) {
-                tasksList.add(task);
-                line = reader.readLine();
-                hasMore = line != null;
-            }
+        try {
+            while (!(line = reader.readLine()).startsWith("Task") && !line.equals("}"))
+                if (line.startsWith("vlans")) {
+                    task.setVlanProperties(parseProperties(line));
+                } else if (line.startsWith("trunk")) {
+                    task.setTrunkProperties(parseProperties(line));
+                } else if (!line.equals("")) {
+                    task.addTaskCommand(new Command(line));
+                } else if(line == null){
+                    throw new CorruptTaskFileException("Reached end of file while reading task:" + task.getName());
+                }
+            tasksList.add(task);
+        }catch (CorruptTaskFileException e){
+            e.getMessage();
+        }catch (IOException e){
+            e.getMessage();
         }
+
     }
 
     private List<Integer> parseProperties(String line) {
