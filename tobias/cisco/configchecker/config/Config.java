@@ -1,17 +1,20 @@
 package com.tobias.cisco.configchecker.config;
 
+import com.tobias.cisco.configchecker.config.item.ConfigItem;
+import com.tobias.cisco.configchecker.config.item.InterfaceItem;
+import com.tobias.cisco.configchecker.config.item.VlanItem;
+
 import java.util.*;
 
 public class Config {
 
     private List<String> lines;
     private String name;
-    private Map<String, ArrayList<String>> interfaceProperties;
-    private  Map<String, ArrayList<String>> vlanProperties;
+    private List<ConfigItem> items;
+
 
     protected Config(String name){
-        this.interfaceProperties = new HashMap<>();
-        this.vlanProperties = new HashMap<>();
+        this.items = new ArrayList<>();
         this.lines = new ArrayList<>();
         this.name = name;
     }
@@ -25,15 +28,16 @@ public class Config {
     }
 
     protected void setInterfaceProperties(String faPort, ArrayList<String> portConfig){
-        this.interfaceProperties.put(faPort,portConfig);
+        this.items.add(new InterfaceItem(faPort,portConfig));
+
     }
 
-    protected void setVlanProperties(String vlan, ArrayList<String> subcommands){
-        this.vlanProperties.put(vlan,subcommands);
+    protected void setVlanProperties(String vlan,List<String> subcommands){
+        this.items.add(new VlanItem(vlan,subcommands));
     }
 
-
-    protected  
-
+    protected List<ConfigItem>getConfigItems(){
+        return this.items;
+    }
 
 }

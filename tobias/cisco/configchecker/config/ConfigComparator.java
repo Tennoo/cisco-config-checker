@@ -1,5 +1,7 @@
 package com.tobias.cisco.configchecker.config;
 
+import com.tobias.cisco.configchecker.config.item.ConfigItem;
+import com.tobias.cisco.configchecker.config.item.InterfaceItem;
 import com.tobias.cisco.configchecker.task.Task;
 
 import java.util.HashMap;
@@ -27,9 +29,9 @@ public class ConfigComparator {
     }
 
     private boolean compareInterface(){
-        Map interfaces = config.getInterfaceProperties();
-
-
+        for(int i = 0; i < config.getConfigItems().size(); i++) {
+            if (config.getConfigItems().get(i) ConfigItem.ItemType.INTERFACEITEM)
+        }
 
     }
 

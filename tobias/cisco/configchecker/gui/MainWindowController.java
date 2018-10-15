@@ -24,10 +24,9 @@ public class MainWindowController {
     public void initialize() {
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
-        TaskLoader taskLoader = new TaskLoader();
-        taskLoader.load();
+       // TaskLoader taskLoader = new TaskLoader();
+       // taskLoader.load();
 
-       // configLoader.getconfig();
     }
 
     public static void setStageInstance(Stage stageInstance) {

@@ -53,7 +53,6 @@ public class ConfigLoader {
         while((line = reader.readLine()).startsWith(" switchport") && !line.startsWith("interface")){
             String trimmedLine = line.trim();
             portPropList.add(trimmedLine);
-            System.out.println(trimmedLine);
         }
         config.setInterfaceProperties(faName, portPropList);
     }
