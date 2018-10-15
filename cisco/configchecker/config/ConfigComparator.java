@@ -30,7 +30,11 @@ public class ConfigComparator {
 
     private boolean compareInterface(){
         for(int i = 0; i < config.getConfigItems().size(); i++) {
-            if (config.getConfigItems().get(i) ConfigItem.ItemType.INTERFACEITEM)
+            if (config.getConfigItems().get(i).type == ConfigItem.ItemType.INTERFACEITEM){
+
+
+                
+            }
         }
 
     }

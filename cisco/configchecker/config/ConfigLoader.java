@@ -44,6 +44,7 @@ public class ConfigLoader {
             } else{
                 config.addLine(line);
             }
+            
         }
     }
 
