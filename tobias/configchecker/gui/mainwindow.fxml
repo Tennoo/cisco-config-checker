@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tobias.cisco.configchecker.gui.MainWindowController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tobias.configchecker.gui.MainWindowController">
 
       <Button  layoutX="93.0" layoutY="188.0" mnemonicParsing="false" text="Select file" fx:id="selectFile" onMouseClicked="#onSelectFileClick"/>
 </AnchorPane>

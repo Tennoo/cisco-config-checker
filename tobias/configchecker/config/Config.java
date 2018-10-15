@@ -1,8 +1,8 @@
-package com.tobias.cisco.configchecker.config;
+package com.tobias.configchecker.config;
 
-import com.tobias.cisco.configchecker.config.item.ConfigItem;
-import com.tobias.cisco.configchecker.config.item.InterfaceItem;
-import com.tobias.cisco.configchecker.config.item.VlanItem;
+import com.tobias.configchecker.config.item.ConfigItem;
+import com.tobias.configchecker.config.item.InterfaceItem;
+import com.tobias.configchecker.config.item.VlanItem;
 
 import java.util.*;
 

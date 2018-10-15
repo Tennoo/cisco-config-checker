@@ -1,5 +1,5 @@
-package com.tobias.cisco.configchecker;
-import com.tobias.cisco.configchecker.gui.MainWindowController;
+package com.tobias.configchecker;
+import com.tobias.configchecker.gui.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

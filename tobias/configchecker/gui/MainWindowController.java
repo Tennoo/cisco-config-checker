@@ -1,7 +1,6 @@
-package com.tobias.cisco.configchecker.gui;
+package com.tobias.configchecker.gui;
 
-import com.tobias.cisco.configchecker.config.ConfigLoader;
-import com.tobias.cisco.configchecker.task.TaskLoader;
+import com.tobias.configchecker.config.ConfigLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;

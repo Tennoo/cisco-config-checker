@@ -1,4 +1,4 @@
-package com.tobias.cisco.configchecker.exceptions;
+package com.tobias.configchecker.exceptions;
 
 public class CorruptTaskFileException extends Exception{
 

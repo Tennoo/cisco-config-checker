@@ -1,4 +1,4 @@
-package com.tobias.cisco.configchecker.config;
+package com.tobias.configchecker.config;
 
 
 import java.io.*;

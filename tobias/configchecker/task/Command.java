@@ -1,4 +1,4 @@
-package com.tobias.cisco.configchecker.task;
+package com.tobias.configchecker.task;
 
 public class Command {
 

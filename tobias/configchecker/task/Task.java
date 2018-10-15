@@ -1,4 +1,4 @@
-package com.tobias.cisco.configchecker.task;
+package com.tobias.configchecker.task;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.tobias.cisco.configchecker.config.item;
+package com.tobias.configchecker.config.item;
 
 import java.util.List;
 
