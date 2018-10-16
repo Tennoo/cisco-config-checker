@@ -28,13 +28,15 @@ public class ConfigComparator {
         int correctConfigCount = 0;
         for(int i = 0; i < config.getConfigItems().size(); i++) {
             if (config.getConfigItems().get(i).type == ConfigItem.ItemType.INTERFACEITEM){
-                for()
+
             }
         }
 
     }
 
-    private boolean compare
+    private boolean hasCorrectTrunkedConfig(){
+
+    }
 
 
 }
