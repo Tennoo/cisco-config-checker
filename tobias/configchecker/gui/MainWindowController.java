@@ -1,6 +1,8 @@
 package com.tobias.configchecker.gui;
 
+import com.tobias.configchecker.config.ConfigComparator;
 import com.tobias.configchecker.config.ConfigLoader;
+import com.tobias.configchecker.task.TaskLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
@@ -23,8 +25,12 @@ public class MainWindowController {
     public void initialize() {
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
-       // TaskLoader taskLoader = new TaskLoader();
-       // taskLoader.load();
+        TaskLoader taskLoader = new TaskLoader();
+        taskLoader.load();
+        ConfigComparator configComparator = new ConfigComparator();
+        configComparator.setConfig(configLoader.getConfig());
+        configComparator.setTask(taskLoader.getTasksList().get(0));
+        configComparator.compare();
 
     }
 

@@ -1,11 +1,9 @@
 package com.tobias.configchecker.config.item;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
 public class InterfaceItem extends ConfigItem{
 
    private String name;
@@ -40,9 +38,10 @@ public class InterfaceItem extends ConfigItem{
     public List<String> getTrunkedVlans(){
        if(props != null) {
            for (String s : props) {
-               if (s.startsWith("switchport mode trunk vlan")) {
-                   String temp = s.substring(s.indexOf("vlan") + 1, s.length() - 1);
-                   List<String> tempList = Arrays.asList(temp.split(",*"));
+               if (s.startsWith("switchport trunk allowed vlan")) {
+                   String temp = s.substring(s.indexOf("vlan ") + 5, s.length());
+                   List<String> tempList = Arrays.asList(temp.split("\\s*,\\s*"));
+                   Collections.sort(tempList);
                    return tempList;
                }
            }

@@ -7,8 +7,8 @@ public class Task {
 
     private String name;
     private List<Command> taskCommand;
-    private List<Integer> vlans;
-    private List<Integer> trunkedVlans;
+    private List<String> vlans;
+    private List<String> trunkedVlans;
 
     public Task(String name){
         this.name = name;
@@ -29,12 +29,12 @@ public class Task {
         }
     }
 
-    protected void setVlanProperties(List<Integer> ids){
+    protected void setVlanProperties(List<String> ids){
         if(!ids.isEmpty()) {
             vlans.addAll(ids);
         }
     }
-    protected void setTrunkProperties(List<Integer> ids){
+    protected void setTrunkProperties(List<String> ids){
         if(!ids.isEmpty()){
             trunkedVlans.addAll(ids);
         }
@@ -44,11 +44,11 @@ public class Task {
         return taskCommand;
     }
 
-    public List<Integer> getVlans() {
+    public List<String> getVlans() {
         return vlans;
     }
 
-    public List<Integer> getTrunkedVlans() {
+    public List<String> getTrunkedVlans() {
         return trunkedVlans;
     }
 }

@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,10 +75,11 @@ public class TaskLoader {
         tasksList.add(task);
 
     }
-    private List<Integer> parseProperties(String line) {
+    private List<String> parseProperties(String line) {
         String temp = line.substring(line.indexOf("[") + 1, line.length() - 1);
         List<String> tempList = Arrays.asList(temp.split(",[ ]*"));
-        return tempList.stream().map(Integer::parseInt).collect(Collectors.toList());
+        Collections.sort(tempList);
+        return tempList;
     }
 
     public List<Task> getTasksList() {

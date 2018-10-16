@@ -67,4 +67,8 @@ public class ConfigLoader {
         }
         config.setVlanProperties(vlanName,vlanSubCommands);
     }
+
+    public Config getConfig(){
+        return this.config;
+    }
 }
