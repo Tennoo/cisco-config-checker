@@ -2,6 +2,7 @@ package com.tobias.configchecker.gui;
 
 import com.tobias.configchecker.config.comparator.ConfigComparator;
 import com.tobias.configchecker.config.ConfigLoader;
+import com.tobias.configchecker.config.message.MessageCode;
 import com.tobias.configchecker.task.TaskLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,6 +32,10 @@ public class MainWindowController {
         configComparator.setConfig(configLoader.getConfig());
         configComparator.setTask(taskLoader.getTasksList().get(0));
         configComparator.compare();
+
+    }
+
+    public void getmessage(){
 
     }
 

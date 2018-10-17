@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class ConfigLoader {
     private Config config;
     private BufferedReader reader;
+    private int lineNumber = 0;
 
     public void load(File configFile) {
         //Todo try with resources.
@@ -14,7 +15,7 @@ public class ConfigLoader {
             this.reader = new BufferedReader(new FileReader(configFile));
             this.config = new Config(configFile.getName());
             String line;
-            while ((line = reader.readLine()) != null && !line.equals("")) {
+            while ((line = readNextLine()) != null && !line.equals("")) {
                 parseAndAddLines(line);
             }
         }
@@ -48,10 +49,15 @@ public class ConfigLoader {
         }
     }
 
+    private String readNextLine()throws IOException{
+        this.lineNumber++;
+        return reader.readLine();
+    }
+
     private void parseInterface(String line) throws IOException {
         String faName = line.substring(line.indexOf("interface "));
         ArrayList<String> portPropList = new ArrayList<>();
-        while((line = reader.readLine()).startsWith(" switchport") && !line.startsWith("interface")){
+        while((line = readNextLine()).startsWith(" switchport") && !line.startsWith("interface")){
             String trimmedLine = line.trim();
             portPropList.add(trimmedLine);
         }
@@ -61,7 +67,7 @@ public class ConfigLoader {
     private void parseVlan(String line) throws IOException{
         String vlanName = line.substring(10);
         ArrayList<String> vlanSubCommands = new ArrayList<>();
-        while(!(line =reader.readLine()).startsWith("interface") && !line.equals("!")){
+        while(!(line =readNextLine()).startsWith("interface") && !line.equals("!")){
             String trimmedLine = line.trim();
             vlanSubCommands.add(trimmedLine);
         }
