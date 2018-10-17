@@ -32,11 +32,11 @@ public class Config {
 
     }
 
-    protected void setVlanProperties(String vlan,List<String> subcommands){
-        this.items.add(new VlanItem(vlan,subcommands));
+    protected void setVlanProperties(String vlan,List<String> subCommand){
+        this.items.add(new VlanItem(vlan,subCommand));
     }
 
-    protected List<ConfigItem>getConfigItems(){
+    public List<ConfigItem>getConfigItems(){
         return this.items;
     }
 

@@ -22,11 +22,3 @@ public class Main extends Application {
 
     }
 }
-
-
-/* Todo - Forskjellig trunk
-*
-*
-*
-*
-* */

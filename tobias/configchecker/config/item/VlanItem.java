@@ -13,6 +13,7 @@ public class VlanItem extends ConfigItem{
         this.type = ItemType.VLANITEM;
     }
 
-
-
+    public String getName() {
+        return name;
+    }
 }

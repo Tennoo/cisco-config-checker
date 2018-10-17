@@ -1,6 +1,6 @@
 package com.tobias.configchecker.gui;
 
-import com.tobias.configchecker.config.ConfigComparator;
+import com.tobias.configchecker.config.comparator.ConfigComparator;
 import com.tobias.configchecker.config.ConfigLoader;
 import com.tobias.configchecker.task.TaskLoader;
 import javafx.fxml.FXML;
