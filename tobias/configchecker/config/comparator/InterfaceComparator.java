@@ -24,12 +24,18 @@ public class InterfaceComparator{
     }
 
     protected boolean compareVlanConfig(Task task, Config config){
+        int vlanConfiguredCount = 0;
         for (int i = 0; i < config.getConfigItems().size(); i++) {
             ConfigItem configItem = config.getConfigItems().get(i);
-            if (configItem.type == ConfigItem.ItemType.VLANITEM) {
-                VlanItem item = (VlanItem) configItem;
-                
+            if (configItem.type == ConfigItem.ItemType.INTERFACEITEM) {
+                InterfaceItem item = (InterfaceItem) configItem;
+                if(item.hasTaggedVlan(task.getVlans().get(i))){
+                    vlanConfiguredCount++;
+                }
             }
         }
+        return (vlanConfiguredCount > task.getVlans().size());
     }
+
+
 }

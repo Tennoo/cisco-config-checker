@@ -13,11 +13,16 @@ public class ConfigComparator {
     private Task task;
     private Config config;
     private List<Message> messages;
+    private InterfaceComparator interfaceComparator;
+    private VlanComparator vlanComparator;
+
+    public ConfigComparator(List<Message> messages) {
+        this.messages = messages;
+        this.interfaceComparator = new InterfaceComparator();
+        this.vlanComparator = new VlanComparator();
+    }
 
     public void addMessage(Message message){
-        if(messages == null){
-            this.messages = new ArrayList<>();
-        }
         messages.add(message);
     }
 
@@ -34,7 +39,12 @@ public class ConfigComparator {
     }
 
     public void compare(){
-
+        Message message;
+        if(!interfaceComparator.compareTrunkedVlan(config,task)){
+            message = new Message("Incorrect trunk config. \n ")
+        }
     }
+
+
 
 }
