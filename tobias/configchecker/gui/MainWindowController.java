@@ -2,6 +2,7 @@ package com.tobias.configchecker.gui;
 
 import com.tobias.configchecker.config.comparator.ConfigComparator;
 import com.tobias.configchecker.config.ConfigLoader;
+import com.tobias.configchecker.config.message.Message;
 import com.tobias.configchecker.config.message.MessageCode;
 import com.tobias.configchecker.task.TaskLoader;
 import javafx.fxml.FXML;
@@ -10,6 +11,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainWindowController {
@@ -18,17 +21,19 @@ public class MainWindowController {
 
     private static Stage stage;
     private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch0_startup-config.txt");
+    private List<Message> messages;
 
 
 
     private FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
+        this.messages = new ArrayList<>();
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
         TaskLoader taskLoader = new TaskLoader();
         taskLoader.load();
-        ConfigComparator configComparator = new ConfigComparator();
+        ConfigComparator configComparator = new ConfigComparator(messages);
         configComparator.setConfig(configLoader.getConfig());
         configComparator.setTask(taskLoader.getTasksList().get(0));
         configComparator.compare();

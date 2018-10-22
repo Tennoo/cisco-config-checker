@@ -13,7 +13,7 @@ public class InterfaceComparator{
             ConfigItem configItem = config.getConfigItems().get(i);
             if (configItem.type == ConfigItem.ItemType.INTERFACEITEM) {
                 InterfaceItem item = (InterfaceItem) configItem;
-                if (item.getTrunkedVlans() == task.getTrunkedVlans()) {
+                if (item.getTrunkedVlans().equals(task.getTrunkedVlans())) {
                     //Todo logger
                     return true;
                 }
@@ -23,13 +23,14 @@ public class InterfaceComparator{
         return false;
     }
 
-    protected boolean compareVlanConfig(Task task, Config config){
+    protected boolean compareVlanConfig(Config config, Task task){
         int vlanConfiguredCount = 0;
-        for (int i = 0; i < config.getConfigItems().size(); i++) {
-            ConfigItem configItem = config.getConfigItems().get(i);
-            if (configItem.type == ConfigItem.ItemType.INTERFACEITEM) {
+        for (ConfigItem c : config.getConfigItems()) {
+            if (configIte
+                    .type == ConfigItem.ItemType.INTERFACEITEM) {
                 InterfaceItem item = (InterfaceItem) configItem;
                 if(item.hasTaggedVlan(task.getVlans().get(i))){
+                    System.out.println(item.getName() + "is tagged with " + task.getVlans().get(i));
                     vlanConfiguredCount++;
                 }
             }

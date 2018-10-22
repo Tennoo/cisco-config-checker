@@ -4,6 +4,7 @@ import com.tobias.configchecker.config.Config;
 import com.tobias.configchecker.config.item.ConfigItem;
 import com.tobias.configchecker.config.item.InterfaceItem;
 import com.tobias.configchecker.config.message.Message;
+import com.tobias.configchecker.config.message.MessageCode;
 import com.tobias.configchecker.task.Task;
 
 import java.util.ArrayList;
@@ -39,9 +40,14 @@ public class ConfigComparator {
     }
 
     public void compare(){
-        Message message;
         if(!interfaceComparator.compareTrunkedVlan(config,task)){
-            message = new Message("Incorrect trunk config. \n ")
+            addMessage(new Message("Incorrect trunk config.", MessageCode.TRUNK_ERROR));
+        }
+        else{
+            addMessage(new Message("Correct trunk config",MessageCode.TRUNK_INFO));
+        }
+        if(!interfaceComparator.compareVlanConfig(config,task)){
+            addMessage(new Message("Incorrect vlan", MessageCode.CONFIG_ERROR));
         }
     }
 
