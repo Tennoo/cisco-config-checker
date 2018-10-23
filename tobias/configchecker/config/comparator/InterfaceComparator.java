@@ -6,36 +6,53 @@ import com.tobias.configchecker.config.item.InterfaceItem;
 import com.tobias.configchecker.config.item.VlanItem;
 import com.tobias.configchecker.task.Task;
 
-public class InterfaceComparator{
+import java.util.ArrayList;
+import java.util.List;
 
-    protected boolean compareTrunkedVlan(Config config, Task task) {
+public class InterfaceComparator {
+
+    Config config;
+    Task task;
+
+    public InterfaceComparator(Config config, Task task) {
+        this.config = config;
+        this.task = task;
+    }
+
+    protected boolean compareTrunkedVlan() {
+
+        l
+        if (item.getTrunkedVlans().equals(task.getTrunkedVlans())) {
+            //Todo logger
+            return true;
+        }
+
+    }
+    // Todo logger
+        return false;
+}
+
+    protected boolean compareVlanConfig() {
+        int vlanConfiguredCount = 0;
+        int index = 0;
+        for (InterfaceItem c : getInterfaceItems()) {
+            index++;
+            if(c.hasTaggedVlan(task.getVlans().get(index))){
+
+            }
+        }
+    }
+
+    private List<InterfaceItem> getInterfaceItems() {
+        List<InterfaceItem> interfaceItems = new ArrayList<>();
         for (int i = 0; i < config.getConfigItems().size(); i++) {
             ConfigItem configItem = config.getConfigItems().get(i);
             if (configItem.type == ConfigItem.ItemType.INTERFACEITEM) {
                 InterfaceItem item = (InterfaceItem) configItem;
-                if (item.getTrunkedVlans().equals(task.getTrunkedVlans())) {
-                    //Todo logger
-                    return true;
-                }
+                interfaceItems.add(item);
             }
         }
-        // Todo logger
-        return false;
-    }
-
-    protected boolean compareVlanConfig(Config config, Task task){
-        int vlanConfiguredCount = 0;
-        for (ConfigItem c : config.getConfigItems()) {
-            if (configIte
-                    .type == ConfigItem.ItemType.INTERFACEITEM) {
-                InterfaceItem item = (InterfaceItem) configItem;
-                if(item.hasTaggedVlan(task.getVlans().get(i))){
-                    System.out.println(item.getName() + "is tagged with " + task.getVlans().get(i));
-                    vlanConfiguredCount++;
-                }
-            }
-        }
-        return (vlanConfiguredCount > task.getVlans().size());
+        return interfaceItems;
     }
 
 
