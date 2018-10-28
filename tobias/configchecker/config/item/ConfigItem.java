@@ -9,7 +9,6 @@ public class ConfigItem {
 
 
 
-
 public enum ItemType{
 
     VLANITEM, INTERFACEITEM

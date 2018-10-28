@@ -18,17 +18,9 @@ public class ConfigComparator {
     private VlanComparator vlanComparator;
 
     public ConfigComparator(List<Message> messages) {
+        this.vlanComparator = new VlanComparator();
+        this.interfaceComparator = new InterfaceComparator();
         this.messages = messages;
-        this.interfaceComparator = new InterfaceComparator(config,task);
-        this.vlanComparator = new VlanComparator(config,task);
-    }
-
-    public void addMessage(Message message){
-        messages.add(message);
-    }
-
-    public List<Message> getMessages() {
-        return messages;
     }
 
     public void setTask(Task task) {
@@ -39,8 +31,18 @@ public class ConfigComparator {
         this.config = config;
     }
 
+    public void addMessage(Message message){
+        messages.add(message);
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
     public void compare(){
-        if(!interfaceComparator.compareTrunkedVlan()){
+        interfaceComparator.setConfig(config);
+        interfaceComparator.setTask(task);
+        if(!interfaceComparator .compareTrunkedVlan()){
             addMessage(new Message("Incorrect trunk config.", MessageCode.TRUNK_ERROR));
         }
         else{
@@ -48,9 +50,8 @@ public class ConfigComparator {
         }
         if(!interfaceComparator.compareVlanConfig()){
             addMessage(new Message("Incorrect vlan", MessageCode.CONFIG_ERROR));
+        } else {
+            addMessage(new Message("Correct vlan config",MessageCode.CONFIG_INFO));
         }
     }
-
-
-
 }

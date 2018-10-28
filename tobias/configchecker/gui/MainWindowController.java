@@ -34,9 +34,10 @@ public class MainWindowController {
         TaskLoader taskLoader = new TaskLoader();
         taskLoader.load();
         ConfigComparator configComparator = new ConfigComparator(messages);
-        configComparator.setConfig(configLoader.getConfig());
         configComparator.setTask(taskLoader.getTasksList().get(0));
+        configComparator.setConfig(configLoader.getConfig());
         configComparator.compare();
+        System.out.println(configComparator.getMessages().get(1).toString());
 
     }
 

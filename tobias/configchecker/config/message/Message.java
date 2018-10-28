@@ -14,6 +14,11 @@ public class Message {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return "message: " + message + "\n" + "code: " + code;
+    }
+
     public MessageCode getCode() {
         return code;
     }

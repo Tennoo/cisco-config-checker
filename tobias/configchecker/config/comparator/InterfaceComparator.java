@@ -9,38 +9,44 @@ import com.tobias.configchecker.task.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterfaceComparator {
+ class InterfaceComparator {
 
-    Config config;
-    Task task;
+    private Config config;
+    private Task task;
 
-    public InterfaceComparator(Config config, Task task) {
-        this.config = config;
-        this.task = task;
-    }
+     public void setConfig(Config config) {
+         this.config = config;
+     }
 
-    protected boolean compareTrunkedVlan() {
+     public void setTask(Task task) {
+         this.task = task;
+     }
 
-        l
-        if (item.getTrunkedVlans().equals(task.getTrunkedVlans())) {
-            //Todo logger
-            return true;
+     protected boolean compareTrunkedVlan() {
+        for(InterfaceItem c: getInterfaceItems()) {
+            if (c.getTrunkedVlans().equals(task.getTrunkedVlans())) {
+                //Todo logger
+                return true;
+            }
         }
-
-    }
-    // Todo logger
+        // Todo logger
         return false;
-}
+    }
+
+
 
     protected boolean compareVlanConfig() {
         int vlanConfiguredCount = 0;
-        int index = 0;
         for (InterfaceItem c : getInterfaceItems()) {
-            index++;
-            if(c.hasTaggedVlan(task.getVlans().get(index))){
+            for(int i = 0;i < task.getVlans().size(); i++) {
+                if (c.hasTaggedVlan(task.getVlans().get(i))) {
+                    //Todo new message
+                    vlanConfiguredCount++;
 
+                }
             }
         }
+        return (vlanConfiguredCount == task.getVlans().size());
     }
 
     private List<InterfaceItem> getInterfaceItems() {
