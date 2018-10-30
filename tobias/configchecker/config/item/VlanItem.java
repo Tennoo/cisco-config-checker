@@ -5,15 +5,20 @@ import java.util.List;
 public class VlanItem extends ConfigItem{
 
     private String name;
-    private List<String> vlanConfig;
+    private List<String> props;
 
-    public VlanItem(String name, List<String> vlanConfig) {
+    public VlanItem(String name, List<String> props) {
         this.name = name;
-        this.vlanConfig = vlanConfig;
+        this.props = props;
         this.type = ItemType.VLANITEM;
     }
 
     public String getName() {
         return name;
+    }
+
+
+    public boolean hasIp(String vlan){
+
     }
 }

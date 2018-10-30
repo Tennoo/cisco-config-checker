@@ -42,6 +42,9 @@ public class ConfigComparator {
     public void compare(){
         interfaceComparator.setConfig(config);
         interfaceComparator.setTask(task);
+        vlanComparator.setTask(task);
+        vlanComparator.setConfig(config);
+
         if(!interfaceComparator .compareTrunkedVlan()){
             addMessage(new Message("Incorrect trunk config.", MessageCode.TRUNK_ERROR));
         }

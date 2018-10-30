@@ -46,7 +46,7 @@ import java.util.List;
                 }
             }
         }
-        return (vlanConfiguredCount == task.getVlans().size());
+        return (vlanConfiguredCount >= task.getVlans().size());
     }
 
     private List<InterfaceItem> getInterfaceItems() {
