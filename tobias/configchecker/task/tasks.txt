@@ -1,7 +1,7 @@
 Task CiscoOppgave1{
 hostname
 ip
-vlans[10,20,30]
+vlans[1,10,20,30]
 trunk[10,20,30]
 }
 Task CiscoOppgave2{

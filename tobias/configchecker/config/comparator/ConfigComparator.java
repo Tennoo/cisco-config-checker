@@ -13,14 +13,12 @@ import java.util.List;
 public class ConfigComparator {
     private Task task;
     private Config config;
-    private List<Message> messages;
     private InterfaceComparator interfaceComparator;
     private VlanComparator vlanComparator;
 
-    public ConfigComparator(List<Message> messages) {
+    public ConfigComparator() {
         this.vlanComparator = new VlanComparator();
         this.interfaceComparator = new InterfaceComparator();
-        this.messages = messages;
     }
 
     public void setTask(Task task) {
@@ -31,30 +29,21 @@ public class ConfigComparator {
         this.config = config;
     }
 
-    public void addMessage(Message message){
-        messages.add(message);
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void compare(){
+    public void compare() {
         interfaceComparator.setConfig(config);
         interfaceComparator.setTask(task);
         vlanComparator.setTask(task);
         vlanComparator.setConfig(config);
 
-        if(!interfaceComparator .compareTrunkedVlan()){
-            addMessage(new Message("Incorrect trunk config.", MessageCode.TRUNK_ERROR));
+        if(vlanComparator.hasAllVlans()){
+            Message.addBriefMessage(new Message("Config has all Vlans present",MessageCode.VLAN_INFO_BRIEF));
+        } else{
+            Message.addBriefMessage(new Message("Config is missing Vlans.",MessageCode.VLAN_ERROR_BRIEF));
         }
-        else{
-            addMessage(new Message("Correct trunk config",MessageCode.TRUNK_INFO));
-        }
-        if(!interfaceComparator.compareVlanConfig()){
-            addMessage(new Message("Incorrect vlan", MessageCode.CONFIG_ERROR));
-        } else {
-            addMessage(new Message("Correct vlan config",MessageCode.CONFIG_INFO));
+        if (vlanComparator.compareVlan()){
+            Message.addBriefMessage(new Message("All Vlans have been properly configured", MessageCode.VLAN_INFO_BRIEF));
+        } else{
+          Message.addBriefMessage(new Message("Vlans have been misconfigured",MessageCode.VLAN_ERROR_BRIEF));
         }
     }
 }

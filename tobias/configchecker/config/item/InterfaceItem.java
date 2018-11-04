@@ -50,8 +50,8 @@ public class InterfaceItem extends ConfigItem {
         return null;
     }
 
-    public boolean hasTaggedVlan(String vlan){
-        if(props != null) {
+    public boolean hasTaggedVlan(String vlan) {
+        if (props != null) {
             for (String s : props) {
                 if (s.equals("switchport access vlan " + vlan)) {
                     return true;

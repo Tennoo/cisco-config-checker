@@ -2,7 +2,7 @@ package com.tobias.configchecker.config.item;
 
 import java.util.List;
 
-public class VlanItem extends ConfigItem{
+public class VlanItem extends ConfigItem {
 
     private String name;
     private List<String> props;
@@ -18,7 +18,22 @@ public class VlanItem extends ConfigItem{
     }
 
 
-    public boolean hasIp(String vlan){
+    public boolean hasIp() {
+        for (String s : props) {
+            if (s.startsWith("ip")) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public boolean isShutDown() {
+        for (String s : props) {
+            if (s.equals("shutdown")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
+

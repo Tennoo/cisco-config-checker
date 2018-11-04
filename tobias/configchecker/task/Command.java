@@ -4,7 +4,7 @@ public class Command {
 
     private String prefix;
 
-    public Command(String prefix){
+    public Command(String prefix) {
         this.prefix = prefix;
 
     }

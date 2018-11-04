@@ -21,29 +21,28 @@ public class MainWindowController {
 
     private static Stage stage;
     private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch0_startup-config.txt");
-    private List<Message> messages;
+
 
 
 
     private FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
-        this.messages = new ArrayList<>();
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
         TaskLoader taskLoader = new TaskLoader();
         taskLoader.load();
-        ConfigComparator configComparator = new ConfigComparator(messages);
+        ConfigComparator configComparator = new ConfigComparator();
         configComparator.setTask(taskLoader.getTasksList().get(0));
         configComparator.setConfig(configLoader.getConfig());
         configComparator.compare();
-        System.out.println(configComparator.getMessages().get(1).toString());
+        Message.getBriefMessages();
+        Message.getDetailedMessages();
+        System.out.println(Message.getBriefMessages().get(0).toString());
 
     }
 
-    public void getmessage(){
 
-    }
 
     public static void setStageInstance(Stage stageInstance) {
         stage = stageInstance;

@@ -18,19 +18,16 @@ public class ConfigLoader {
             while ((line = readNextLine()) != null && !line.equals("")) {
                 parseAndAddLines(line);
             }
-        }
-
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             //Todo logger
         } catch (IOException e) {
             //Todo logger
-        }
-        finally {
+        } finally {
             try {
                 reader.close();
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
-            } catch (Exception e){
+            } catch (Exception e) {
                 //Todo logger
             }
         }
@@ -40,16 +37,16 @@ public class ConfigLoader {
         if (!line.equals("!")) {
             if (line.startsWith("interface") && !line.startsWith("interface Vlan")) {
                 parseInterface(line);
-            } else if (line.startsWith("interface Vlan")){
+            } else if (line.startsWith("interface Vlan")) {
                 parseVlan(line);
-            } else{
+            } else {
                 config.addLine(line);
             }
-            
+
         }
     }
 
-    private String readNextLine()throws IOException{
+    private String readNextLine() throws IOException {
         this.lineNumber++;
         return reader.readLine();
     }
@@ -57,24 +54,24 @@ public class ConfigLoader {
     private void parseInterface(String line) throws IOException {
         String faName = line.substring(line.indexOf("interface "));
         ArrayList<String> portPropList = new ArrayList<>();
-        while((line = readNextLine()).startsWith(" switchport") && !line.startsWith("interface")){
+        while ((line = readNextLine()).startsWith(" switchport") && !line.startsWith("interface")) {
             String trimmedLine = line.trim();
             portPropList.add(trimmedLine);
         }
         config.setInterfaceProperties(faName, portPropList);
     }
 
-    private void parseVlan(String line) throws IOException{
+    private void parseVlan(String line) throws IOException {
         String vlanName = line.substring(10);
         ArrayList<String> vlanSubCommands = new ArrayList<>();
-        while(!(line =readNextLine()).startsWith("interface") && !line.equals("!")){
+        while (!(line = readNextLine()).startsWith("interface") && !line.equals("!")) {
             String trimmedLine = line.trim();
             vlanSubCommands.add(trimmedLine);
         }
-        config.setVlanProperties(vlanName,vlanSubCommands);
+        config.setVlanProperties(vlanName, vlanSubCommands);
     }
 
-    public Config getConfig(){
+    public Config getConfig() {
         return this.config;
     }
 }

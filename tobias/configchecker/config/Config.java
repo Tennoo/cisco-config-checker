@@ -13,30 +13,30 @@ public class Config {
     private List<ConfigItem> items;
 
 
-    protected Config(String name){
+    protected Config(String name) {
         this.items = new ArrayList<>();
         this.lines = new ArrayList<>();
         this.name = name;
     }
 
-    protected void addLine(String line){
+    protected void addLine(String line) {
         lines.add(line);
     }
 
-    protected List<String> getLines(){
+    protected List<String> getLines() {
         return lines;
     }
 
-    protected void setInterfaceProperties(String faPort, ArrayList<String> portConfig){
-        this.items.add(new InterfaceItem(faPort,portConfig));
+    protected void setInterfaceProperties(String faPort, ArrayList<String> portConfig) {
+        this.items.add(new InterfaceItem(faPort, portConfig));
 
     }
 
-    protected void setVlanProperties(String vlan,List<String> subCommand){
-        this.items.add(new VlanItem(vlan,subCommand));
+    protected void setVlanProperties(String vlan, List<String> subCommand) {
+        this.items.add(new VlanItem(vlan, subCommand));
     }
 
-    public List<ConfigItem>getConfigItems(){
+    public List<ConfigItem> getConfigItems() {
         return this.items;
     }
 
