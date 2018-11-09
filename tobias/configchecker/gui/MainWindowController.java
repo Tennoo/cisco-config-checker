@@ -39,6 +39,7 @@ public class MainWindowController {
         Message.getBriefMessages();
         Message.getDetailedMessages();
         System.out.println(Message.getBriefMessages().get(0).toString());
+        Message.getDetailedMessageByCode(MessageCode.VLAN_ERROR_DETAIL);
 
     }
 

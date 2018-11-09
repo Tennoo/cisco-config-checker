@@ -17,8 +17,16 @@ public class Message {
         briefMessages = new ArrayList<>();
     }
 
-    public String getMessage() {
-        return message;
+    public static  List<Message> getDetailedMessageByCode(MessageCode code) {
+        List<Message> messages = new ArrayList<>();
+        for(Message m : detailedMessages){
+            if(m.code == code){
+                System.out.println(m.toString());
+                messages.add(m);
+            }
+        }
+        return messages;
+
     }
 
 

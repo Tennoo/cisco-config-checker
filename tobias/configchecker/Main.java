@@ -15,6 +15,7 @@ public class Main extends Application {
         primaryStage.setTitle("Cisco Config Checker");
         primaryStage.setScene(new Scene(root, 1300, 700));
         primaryStage.show();
+        root.getStylesheets().add(this.getClass().getResource("gui/style/app.css").toExternalForm());
     }
 
     public static void main(String[] args) {

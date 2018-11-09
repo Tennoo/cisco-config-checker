@@ -23,14 +23,14 @@ class VlanComparator {
     }
 
     protected boolean compareVlan() {
-        int correctCnfig = 0;
+        int correctConfig = 0;
         for (VlanItem v : getVlanItems()) {
-            if (v.getName().equals("interface Vlan1")) {
+            if (v.getName().equals("Vlan1")) {
                 for (int i = 0; i < task.getTaskCommand().size(); i++){
                     String prefix  = task.getTaskCommand().get(i).getPrefix();
                     if(prefix.equals("ip")){
                         if(v.hasIp()){
-                            correctCnfig++;
+                            correctConfig++;
                             Message.addDetailedMessage(new Message("IP for switch has been set", MessageCode.VLAN_INFO_DETAIL));
                         } else{
                             Message.addDetailedMessage(new Message("IP for the switch has not been set",MessageCode.VLAN_ERROR_DETAIL));
@@ -39,13 +39,15 @@ class VlanComparator {
                 }
             }
             if (!v.isShutDown()){
-                correctCnfig++;
+                correctConfig++;
+
                 Message.addDetailedMessage(new Message(v.getName() + " is online.",MessageCode.VLAN_INFO_DETAIL));
             }else {
                 Message.addDetailedMessage(new Message(v.getName() + " is shutdown", MessageCode.VLAN_ERROR_DETAIL));
             }
         }
-        return (correctCnfig >= getVlanItems().size());
+        // Add +1 to accommodate for Vlan 1 configuratipn
+        return (correctConfig == getVlanItems().size() + 1) ;
     }
 
     protected boolean hasAllVlans() {
@@ -60,9 +62,6 @@ class VlanComparator {
             }
             index++;
         }
-
-        // Subtract to account for Vlan 1. Vlan 1 should always be present.
-
         return (correctVlan == task.getVlans().size());
     }
 

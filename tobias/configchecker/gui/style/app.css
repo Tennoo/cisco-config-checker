@@ -1,0 +1,25 @@
+
+
+.titled-pane > .title
+{
+
+    -fx-background-color:  transparent;
+
+}
+
+.titled-pane
+{
+
+    -fx-text-fill: white;
+}
+
+
+.titled-pane > .content
+{
+-fx-border-color:  #2e3844;
+}
+
+
+
+
+
