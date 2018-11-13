@@ -7,26 +7,26 @@ public class Message {
 
     private String message;
     private MessageCode code;
-    private static List<Message> detailedMessages;
-    private static List<Message> briefMessages;
+    private static List<Message> detailedMessages = new ArrayList<>();
+    private static List<Message> briefMessages = new ArrayList<>();
 
     public Message(String message, MessageCode code) {
         this.message = message;
         this.code = code;
-        detailedMessages = new ArrayList<>();
-        briefMessages = new ArrayList<>();
     }
 
     public static  List<Message> getDetailedMessageByCode(MessageCode code) {
         List<Message> messages = new ArrayList<>();
-        for(Message m : detailedMessages){
-            if(m.code == code){
-                System.out.println(m.toString());
-                messages.add(m);
+        for(int i = 0; i < detailedMessages.size(); i++){
+            if(detailedMessages.get(i).code == code){
+                System.out.println(detailedMessages.get(i).toString());
+                messages.add(detailedMessages.get(i));
             }
         }
-        return messages;
 
+
+
+        return messages;
     }
 
 

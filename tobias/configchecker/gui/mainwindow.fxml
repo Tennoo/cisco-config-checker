@@ -2,8 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,59 +13,65 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tobias.configchecker.gui.MainWindowController">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #2e3844;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tobias.configchecker.gui.MainWindowController">
    <children>
-      <SplitPane dividerPositions="0.5" layoutX="-6.0" orientation="VERTICAL" prefHeight="702.0" prefWidth="1300.0" style="-fx-background-color: #c0c7d6;">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #2e3844; -fx-border-color: #2e3844;">
+      <JFXButton buttonType="RAISED" layoutX="70.0" layoutY="170.0" prefHeight="42.0" prefWidth="137.0" ripplerFill="#656464" style="-fx-background-color: efb351;" text="Compare Config">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton id="selectConfigButton" layoutX="21.0" layoutY="77.0" prefHeight="42.0" prefWidth="117.0" style="-fx-background-color: #515d6d;" text="Select Config File" textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXComboBox id="taskSelector" focusColor="WHITE" labelFloat="true" layoutX="162.0" layoutY="77.0" prefHeight="42.0" prefWidth="117.0" promptText="Select Task" style="-fx-prompt-text-fill: white;" unFocusColor="#515d6d" />
+      <TitledPane animated="false" layoutX="14.0" layoutY="278.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Task Specifications" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <content>
+            <GridPane style="-fx-background-color: #2e3844;">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <JFXButton buttonType="RAISED" layoutX="568.0" layoutY="95.0" prefHeight="42.0" prefWidth="137.0" ripplerFill="#656464" style="-fx-background-color: efb351;" text="Compare Config">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton layoutX="510.0" layoutY="163.0" prefHeight="42.0" prefWidth="117.0" style="-fx-background-color: #515d6d;" text="Select Config File" textFill="WHITE">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXComboBox id="taskSelector" focusColor="WHITE" labelFloat="true" layoutX="647.0" layoutY="157.0" prefHeight="42.0" prefWidth="117.0" promptText="Select Task" style="-fx-prompt-text-fill: white;" unFocusColor="#515d6d" />
-                  <TitledPane animated="false" layoutX="915.0" layoutY="30.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Task Specifications" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <content>
-                        <GridPane style="-fx-background-color: #2e3844;">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vlans:" />
-                           </children>
-                        </GridPane>
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" layoutX="187.0" layoutY="30.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Config Specifications" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2e3844; -fx-border-color: #2e3844;" />
-                     </content>
-                  </TitledPane>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vlans:" />
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #353638;" />
-        </items>
-      </SplitPane>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="14.0" layoutY="466.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Config Specifications" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2e3844; -fx-border-color: #2e3844;" />
+         </content>
+      </TitledPane>
+      <Text fill="#e15b5b" layoutX="27.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" wrappingWidth="147.27734375">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Separator id="settingsSeparator" layoutX="27.0" layoutY="48.0" prefHeight="18.0" prefWidth="315.0" />
+      <Separator id="middleSeparator" layoutX="27.0" layoutY="238.0" prefHeight="18.0" prefWidth="314.0" />
+      <Separator layoutX="366.0" layoutY="57.0" orientation="VERTICAL" prefHeight="596.0" prefWidth="9.0" />
+      <Text fill="#e15b5b" layoutX="400.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Result" wrappingWidth="147.27734375">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Separator id="settingsSeparator" layoutX="400.0" layoutY="48.0" prefHeight="18.0" prefWidth="295.0" />
+      <JFXListView id="briefMessageView" layoutX="439.0" layoutY="78.0" />
    </children>
 </AnchorPane>

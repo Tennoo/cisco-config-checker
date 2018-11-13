@@ -1,5 +1,7 @@
 package com.tobias.configchecker.gui;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.tobias.configchecker.config.comparator.ConfigComparator;
 import com.tobias.configchecker.config.ConfigLoader;
 import com.tobias.configchecker.config.message.Message;
@@ -17,7 +19,10 @@ import java.util.List;
 
 public class MainWindowController {
     @FXML
-    private Button selectFile;
+    private JFXButton selectConfigButton;
+
+    @FXML
+    private JFXListView briefMessageView;
 
     private static Stage stage;
     private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch0_startup-config.txt");
@@ -28,6 +33,7 @@ public class MainWindowController {
     private FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
+
         ConfigLoader configLoader = new ConfigLoader();
         configLoader.load(configFile);
         TaskLoader taskLoader = new TaskLoader();
@@ -39,7 +45,7 @@ public class MainWindowController {
         Message.getBriefMessages();
         Message.getDetailedMessages();
         System.out.println(Message.getBriefMessages().get(0).toString());
-        Message.getDetailedMessageByCode(MessageCode.VLAN_ERROR_DETAIL);
+        System.out.println(Message.getDetailedMessageByCode(MessageCode.VLAN_INFO_DETAIL).get(0));
 
     }
 

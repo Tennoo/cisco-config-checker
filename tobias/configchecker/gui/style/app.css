@@ -18,7 +18,16 @@
 {
 -fx-border-color:  #2e3844;
 }
-
+.separator .line
+{
+    -fx-border-color: #727e91;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10 10 10 10;
+}
+#middleSeparator .line
+{
+    -fx-border-color: #727e91;
+}
 
 
 
