@@ -15,17 +15,17 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #2e3844;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tobias.configchecker.gui.MainWindowController">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="70.0" layoutY="170.0" prefHeight="42.0" prefWidth="137.0" ripplerFill="#656464" style="-fx-background-color: efb351;" text="Compare Config">
+      <JFXButton buttonType="RAISED" layoutX="106.0" layoutY="170.0" prefHeight="42.0" prefWidth="137.0" ripplerFill="#656464" style="-fx-background-color: efb351;" text="Compare Config">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton id="selectConfigButton" layoutX="21.0" layoutY="77.0" prefHeight="42.0" prefWidth="117.0" style="-fx-background-color: #515d6d;" text="Select Config File" textFill="WHITE">
+      <JFXButton fx:id="selectConfigButton" layoutX="42.0" layoutY="84.0" prefHeight="42.0" prefWidth="117.0" style="-fx-background-color: #515d6d;" text="Select Config File" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font>
       </JFXButton>
-      <JFXComboBox id="taskSelector" focusColor="WHITE" labelFloat="true" layoutX="162.0" layoutY="77.0" prefHeight="42.0" prefWidth="117.0" promptText="Select Task" style="-fx-prompt-text-fill: white;" unFocusColor="#515d6d" />
+      <JFXComboBox fx:id="taskSelector" focusColor="WHITE" labelFloat="true" layoutX="198.0" layoutY="77.0" prefHeight="42.0" prefWidth="117.0" promptText="Select Task" style="-fx-prompt-text-fill: white;" unFocusColor="#515d6d" />
       <TitledPane animated="false" layoutX="14.0" layoutY="278.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Task Specifications" textFill="WHITE">
          <font>
             <Font size="14.0" />
@@ -63,15 +63,16 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Separator id="settingsSeparator" layoutX="27.0" layoutY="48.0" prefHeight="18.0" prefWidth="315.0" />
-      <Separator id="middleSeparator" layoutX="27.0" layoutY="238.0" prefHeight="18.0" prefWidth="314.0" />
+      <Separator layoutX="27.0" layoutY="48.0" prefHeight="18.0" prefWidth="315.0" />
+      <Separator fx:id="middleSeparator" layoutX="27.0" layoutY="238.0" prefHeight="18.0" prefWidth="314.0" />
       <Separator layoutX="366.0" layoutY="57.0" orientation="VERTICAL" prefHeight="596.0" prefWidth="9.0" />
       <Text fill="#e15b5b" layoutX="400.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Result" wrappingWidth="147.27734375">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Separator id="settingsSeparator" layoutX="400.0" layoutY="48.0" prefHeight="18.0" prefWidth="295.0" />
-      <JFXListView id="briefMessageView" layoutX="439.0" layoutY="78.0" />
+      <Separator fx:id="settingsSeparator" layoutX="400.0" layoutY="48.0" prefHeight="18.0" prefWidth="295.0" />
+      <JFXListView fx:id="briefMessageView" layoutX="439.0" layoutY="78.0" />
+      <JFXListView fx:id="detailedMessageView" layoutX="659.0" layoutY="78.0" />
    </children>
 </AnchorPane>

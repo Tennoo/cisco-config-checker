@@ -16,6 +16,9 @@ public class VlanItem extends ConfigItem {
     public String getName() {
         return name;
     }
+    public String getId(){
+        return name.substring(name.indexOf("n") + 1);
+    }
 
 
     public boolean hasIp() {

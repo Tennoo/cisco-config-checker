@@ -5,9 +5,12 @@ import com.tobias.configchecker.config.item.ConfigItem;
 import com.tobias.configchecker.config.item.VlanItem;
 import com.tobias.configchecker.config.message.Message;
 import com.tobias.configchecker.config.message.MessageCode;
+import com.tobias.configchecker.gui.MainWindowController;
 import com.tobias.configchecker.task.Task;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 class VlanComparator {
@@ -23,46 +26,55 @@ class VlanComparator {
     }
 
     protected boolean compareVlan() {
+        List<Message> detailedErrorMessages = new ArrayList<>();
+        List<Message> detailedCorrectMessages = new ArrayList<>();
         int correctConfig = 0;
         for (VlanItem v : getVlanItems()) {
             if (v.getName().equals("Vlan1")) {
-                for (int i = 0; i < task.getTaskCommand().size(); i++){
-                    String prefix  = task.getTaskCommand().get(i).getPrefix();
-                    if(prefix.equals("ip")){
-                        if(v.hasIp()){
+                for (int i = 0; i < task.getTaskCommand().size(); i++) {
+                    String prefix = task.getTaskCommand().get(i).getPrefix();
+                    if (prefix.equals("ip")) {
+                        if (v.hasIp()) {
                             correctConfig++;
-                            Message.addDetailedMessage(new Message("IP for switch has been set", MessageCode.VLAN_INFO_DETAIL));
-                        } else{
-                            Message.addDetailedMessage(new Message("IP for the switch has not been set",MessageCode.VLAN_ERROR_DETAIL));
+                            detailedCorrectMessages.add(new Message("IP for switch has been set", MessageCode.VLAN_INFO_DETAIL));
+                        } else {
+                            detailedErrorMessages.add(new Message("IP for the switch has not been set", MessageCode.VLAN_ERROR_DETAIL));
                         }
                     }
                 }
             }
-            if (!v.isShutDown()){
+            if (!v.isShutDown()) {
                 correctConfig++;
-
-                Message.addDetailedMessage(new Message(v.getName() + " is online.",MessageCode.VLAN_INFO_DETAIL));
-            }else {
-                Message.addDetailedMessage(new Message(v.getName() + " is shutdown", MessageCode.VLAN_ERROR_DETAIL));
+                detailedCorrectMessages.add(new Message(v.getName() + " is online.", MessageCode.VLAN_INFO_DETAIL));
+            } else {
+                detailedErrorMessages.add(new Message(v.getName() + " is shutdown", MessageCode.VLAN_ERROR_DETAIL));
             }
         }
-        // Add +1 to accommodate for Vlan 1 configuratipn
-        return (correctConfig == getVlanItems().size() + 1) ;
+        // Add +1 to accommodate for Vlan 1 configuration
+        boolean isCorrect = (correctConfig == getVlanItems().size() + 1);
+        if (isCorrect) {
+            MainWindowController.addCorrectMessage(new Message("Vlans have been correctly configures", MessageCode.VLAN_INFO_BRIEF), detailedCorrectMessages);
+            return true;
+        }
+        MainWindowController.addErrorMessage(new Message("Some vlans have been misconfigured", MessageCode.VLAN_ERROR_BRIEF), detailedErrorMessages);
+        return false;
     }
 
     protected boolean hasAllVlans() {
-        int index = 0;
-        int correctVlan = 0;
-        for (VlanItem v : getVlanItems()) {
-            if (v.getName().contains(task.getVlans().get(index))) {
-                Message.addDetailedMessage(new Message(v.getName() + " correctly configured", MessageCode.VLAN_INFO_DETAIL));
-                correctVlan++;
-            } else {
-                Message.addDetailedMessage(new Message(v.getName() + " could not be found in the task specifications", MessageCode.VLAN_ERROR_DETAIL));
-            }
-            index++;
+        List<Message> detailedErrorMessages = new ArrayList<>();
+        List<Message> detailedCorrectMessages = new ArrayList<>();
+        Collection res = CollectionUtils.removeAll(task.getVlans(),getVlanItemId());
+        if(res.isEmpty()){
+            MainWindowController.addCorrectMessage(new Message("Config has all Vlans present", MessageCode.VLAN_INFO_BRIEF), detailedCorrectMessages);
+            return true;
         }
-        return (correctVlan == task.getVlans().size());
+        else{
+            for(Object o : res){
+                detailedErrorMessages.add(new Message("Vlan" + o + " was not found in the config file", MessageCode.VLAN_ERROR_DETAIL));
+            }
+                MainWindowController.addErrorMessage(new Message("Config is missing vlans", MessageCode.VLAN_ERROR_BRIEF), detailedErrorMessages);
+            return false;
+        }
     }
 
     private List<VlanItem> getVlanItems() {
@@ -75,6 +87,14 @@ class VlanComparator {
             }
         }
         return vlanItems;
+    }
+
+    private List<String> getVlanItemId(){
+        List<String> ids = new ArrayList<>();
+        for (VlanItem v : getVlanItems()){
+            ids.add(v.getId());
+        }
+        return ids;
     }
 }
 

@@ -1,6 +1,8 @@
 package com.tobias.configchecker.config;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class ConfigLoader {
             this.reader = new BufferedReader(new FileReader(configFile));
             this.config = new Config(configFile.getName());
             String line;
-            while ((line = readNextLine()) != null && !line.equals("")) {
+            while ((line = readNextLine()) != null) {
                 parseAndAddLines(line);
             }
         } catch (FileNotFoundException e) {
@@ -34,7 +36,7 @@ public class ConfigLoader {
     }
 
     private void parseAndAddLines(String line) throws IOException {
-        if (!line.equals("!")) {
+        if (!line.equals("!") && !line.equals("")) {
             if (line.startsWith("interface") && !line.startsWith("interface Vlan")) {
                 parseInterface(line);
             } else if (line.startsWith("interface Vlan")) {
@@ -54,9 +56,11 @@ public class ConfigLoader {
     private void parseInterface(String line) throws IOException {
         String faName = line.substring(line.indexOf("interface "));
         ArrayList<String> portPropList = new ArrayList<>();
-        while ((line = readNextLine()).startsWith(" switchport") && !line.startsWith("interface")) {
-            String trimmedLine = line.trim();
-            portPropList.add(trimmedLine);
+        while (!(line = readNextLine()).startsWith("interface")) {
+            if(line.trim().startsWith("switchport")) {
+                String trimmedLine = line.trim();
+                portPropList.add(trimmedLine);
+            }
         }
         config.setInterfaceProperties(faName, portPropList);
     }

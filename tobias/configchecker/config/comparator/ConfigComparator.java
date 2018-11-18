@@ -34,16 +34,8 @@ public class ConfigComparator {
         interfaceComparator.setTask(task);
         vlanComparator.setTask(task);
         vlanComparator.setConfig(config);
+        vlanComparator.hasAllVlans();
+        vlanComparator.compareVlan();
 
-        if(vlanComparator.hasAllVlans()){
-            Message.addBriefMessage(new Message("Config has all Vlans present",MessageCode.VLAN_INFO_BRIEF));
-        } else{
-            Message.addBriefMessage(new Message("Config is missing Vlans.",MessageCode.VLAN_ERROR_BRIEF));
-        }
-        if (vlanComparator.compareVlan()){
-            Message.addBriefMessage(new Message("All Vlans have been properly configured", MessageCode.VLAN_INFO_BRIEF));
-        } else{
-          Message.addBriefMessage(new Message("Vlans have been misconfigured",MessageCode.VLAN_ERROR_BRIEF));
-        }
     }
 }

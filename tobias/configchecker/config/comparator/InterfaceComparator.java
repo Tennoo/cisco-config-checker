@@ -3,9 +3,12 @@ package com.tobias.configchecker.config.comparator;
 import com.tobias.configchecker.config.Config;
 import com.tobias.configchecker.config.item.ConfigItem;
 import com.tobias.configchecker.config.item.InterfaceItem;
+import com.tobias.configchecker.config.message.Message;
 import com.tobias.configchecker.task.Task;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 class InterfaceComparator {
@@ -22,14 +25,10 @@ class InterfaceComparator {
     }
 
     protected boolean compareTrunkedVlan() {
-        for (InterfaceItem c : getInterfaceItems()) {
-            if (c.getTrunkedVlans().equals(task.getTrunkedVlans())) {
-                //Todo logger
-                return true;
-            }
-        }
-        // Todo logger
-        return false;
+        List<Message> detailedErrorMessages = new ArrayList<>();
+        List<Message> detailedCorrectMessages = new ArrayList<>();
+        List<String> trunkedVlans = 
+        Collection res = CollectionUtils.removeAll(task.getTrunkedVlans(),);
     }
 
 
