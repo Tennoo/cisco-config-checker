@@ -7,6 +7,7 @@ import com.tobias.configchecker.config.message.Message;
 import com.tobias.configchecker.task.Task;
 import org.apache.commons.collections4.CollectionUtils;
 
+import javax.swing.event.ListDataEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -56,6 +57,15 @@ class InterfaceComparator {
             }
         }
         return interfaceItems;
+    }
+
+    private List<String> getTrunkedVlans(){
+        List<String> trunkedVlans= new ArrayList<>();
+        for(InterfaceItem i : getInterfaceItems()){
+            if(i.getTrunkedVlans() != null){
+                trunkedVlans.add(i.getTrunkedVlans());
+            }
+        }
     }
 
 
