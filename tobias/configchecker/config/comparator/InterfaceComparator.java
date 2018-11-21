@@ -28,7 +28,8 @@ class InterfaceComparator {
     protected boolean compareTrunkedVlan() {
         List<Message> detailedErrorMessages = new ArrayList<>();
         List<Message> detailedCorrectMessages = new ArrayList<>();
-        List<String> trunkedVlans = 
+        List<String> trunkedVlans = getTrunkedVlans();
+        if()
         Collection res = CollectionUtils.removeAll(task.getTrunkedVlans(),);
     }
 
@@ -63,9 +64,10 @@ class InterfaceComparator {
         List<String> trunkedVlans= new ArrayList<>();
         for(InterfaceItem i : getInterfaceItems()){
             if(i.getTrunkedVlans() != null){
-                trunkedVlans.add(i.getTrunkedVlans());
+                trunkedVlans.addAll(i.getTrunkedVlans());
             }
         }
+        return trunkedVlans;
     }
 
 
