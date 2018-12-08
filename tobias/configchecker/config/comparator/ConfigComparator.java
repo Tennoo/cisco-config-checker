@@ -36,6 +36,9 @@ public class ConfigComparator {
         vlanComparator.setConfig(config);
         vlanComparator.hasAllVlans();
         vlanComparator.compareVlan();
+        interfaceComparator.compareTrunkedVlan();
+        interfaceComparator.compareTaggedVlans();
+
 
     }
 }

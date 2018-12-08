@@ -10,15 +10,16 @@ public class ConfigLoader {
     private Config config;
     private BufferedReader reader;
     private int lineNumber = 0;
+    private String currentLine;
 
     public void load(File configFile) {
         //Todo try with resources.
         try {
             this.reader = new BufferedReader(new FileReader(configFile));
             this.config = new Config(configFile.getName());
-            String line;
-            while ((line = readNextLine()) != null) {
-                parseAndAddLines(line);
+            readNextLine();
+            while (currentLine != null) {
+                parseAndAddLines(currentLine);
             }
         } catch (FileNotFoundException e) {
             //Todo logger
@@ -43,20 +44,21 @@ public class ConfigLoader {
                 parseVlan(line);
             } else {
                 config.addLine(line);
-            }
 
+            }
         }
     }
 
     private String readNextLine() throws IOException {
         this.lineNumber++;
-        return reader.readLine();
+        currentLine = reader.readLine();
+        return currentLine;
     }
 
     private void parseInterface(String line) throws IOException {
         String faName = line.substring(line.indexOf("interface "));
         ArrayList<String> portPropList = new ArrayList<>();
-        while (!(line = readNextLine()).startsWith("interface")) {
+        while (!readNextLine().startsWith("interface") && !line.equals("!")){
             if(line.trim().startsWith("switchport")) {
                 String trimmedLine = line.trim();
                 portPropList.add(trimmedLine);
@@ -68,10 +70,11 @@ public class ConfigLoader {
     private void parseVlan(String line) throws IOException {
         String vlanName = line.substring(10);
         ArrayList<String> vlanSubCommands = new ArrayList<>();
-        while (!(line = readNextLine()).startsWith("interface") && !line.equals("!")) {
+        while (!readNextLine().startsWith("interface") && !line.equals("!")) {
             String trimmedLine = line.trim();
             vlanSubCommands.add(trimmedLine);
         }
+        readNextLine();
         config.setVlanProperties(vlanName, vlanSubCommands);
     }
 

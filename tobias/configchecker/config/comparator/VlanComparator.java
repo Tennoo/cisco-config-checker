@@ -31,6 +31,7 @@ class VlanComparator {
         int correctConfig = 0;
         for (VlanItem v : getVlanItems()) {
             if (v.getName().equals("Vlan1")) {
+                // Todo simplified for()
                 for (int i = 0; i < task.getTaskCommand().size(); i++) {
                     String prefix = task.getTaskCommand().get(i).getPrefix();
                     if (prefix.equals("ip")) {
@@ -53,7 +54,7 @@ class VlanComparator {
         // Add +1 to accommodate for Vlan 1 configuration
         boolean isCorrect = (correctConfig == getVlanItems().size() + 1);
         if (isCorrect) {
-            MainWindowController.addCorrectMessage(new Message("Vlans have been correctly configures", MessageCode.VLAN_INFO_BRIEF), detailedCorrectMessages);
+            MainWindowController.addCorrectMessage(new Message("Vlans have been correctly configured", MessageCode.VLAN_INFO_BRIEF), detailedCorrectMessages);
             return true;
         }
         MainWindowController.addErrorMessage(new Message("Some vlans have been misconfigured", MessageCode.VLAN_ERROR_BRIEF), detailedErrorMessages);
@@ -70,9 +71,9 @@ class VlanComparator {
         }
         else{
             for(Object o : res){
-                detailedErrorMessages.add(new Message("Vlan" + o + " was not found in the config file", MessageCode.VLAN_ERROR_DETAIL));
+                detailedErrorMessages.add(new Message("Vlan" + o + " is missing from the config file", MessageCode.VLAN_ERROR_DETAIL));
             }
-                MainWindowController.addErrorMessage(new Message("Config is missing vlans", MessageCode.VLAN_ERROR_BRIEF), detailedErrorMessages);
+                MainWindowController.addErrorMessage(new Message("Config is missing Vlans", MessageCode.VLAN_ERROR_BRIEF), detailedErrorMessages);
             return false;
         }
     }
