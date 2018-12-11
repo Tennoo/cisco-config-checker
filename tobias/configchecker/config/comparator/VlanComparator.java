@@ -29,7 +29,7 @@ class VlanComparator {
         List<Message> detailedErrorMessages = new ArrayList<>();
         List<Message> detailedCorrectMessages = new ArrayList<>();
         int correctConfig = 0;
-        for (VlanItem v : getVlanItems()) {
+        for (VlanItem v : config.getVlanItems()) {
             if (v.getName().equals("Vlan1")) {
                 // Todo simplified for()
                 for (int i = 0; i < task.getTaskCommand().size(); i++) {
@@ -52,7 +52,7 @@ class VlanComparator {
             }
         }
         // Add +1 to accommodate for Vlan 1 configuration
-        boolean isCorrect = (correctConfig == getVlanItems().size() + 1);
+        boolean isCorrect = (correctConfig == config.getVlanItems().size() + 1);
         if (isCorrect) {
             MainWindowController.addCorrectMessage(new Message("Vlans have been correctly configured", MessageCode.VLAN_INFO_BRIEF), detailedCorrectMessages);
             return true;
@@ -64,7 +64,7 @@ class VlanComparator {
     protected boolean hasAllVlans() {
         List<Message> detailedErrorMessages = new ArrayList<>();
         List<Message> detailedCorrectMessages = new ArrayList<>();
-        Collection res = CollectionUtils.removeAll(task.getVlans(),getVlanItemId());
+        Collection res = CollectionUtils.removeAll(task.getVlans(),config.getVlanItemId());
         if(res.isEmpty()){
             MainWindowController.addCorrectMessage(new Message("Config has all Vlans present", MessageCode.VLAN_INFO_BRIEF), detailedCorrectMessages);
             return true;
@@ -78,24 +78,8 @@ class VlanComparator {
         }
     }
 
-    private List<VlanItem> getVlanItems() {
-        List<VlanItem> vlanItems = new ArrayList<>();
-        for (int i = 0; i < config.getConfigItems().size(); i++) {
-            ConfigItem configItem = config.getConfigItems().get(i);
-            if (configItem.type == ConfigItem.ItemType.VLANITEM) {
-                VlanItem item = (VlanItem) configItem;
-                vlanItems.add(item);
-            }
-        }
-        return vlanItems;
-    }
 
-    private List<String> getVlanItemId(){
-        List<String> ids = new ArrayList<>();
-        for (VlanItem v : getVlanItems()){
-            ids.add(v.getId());
-        }
-        return ids;
-    }
+
+
 }
 

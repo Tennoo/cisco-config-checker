@@ -48,6 +48,17 @@ public class Task {
         return vlans;
     }
 
+    // Returns all vlans except Vlan 1
+    public List<String> getEffectiveVlans(){
+        List<String> efvlans = new ArrayList<>();
+        for(String s : vlans){
+            if (!s.equals("1")){
+                efvlans.add(s);
+            }
+        }
+        return efvlans;
+    }
+
     public List<String> getTrunkedVlans() {
         return trunkedVlans;
     }

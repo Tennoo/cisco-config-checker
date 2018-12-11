@@ -30,7 +30,7 @@ class InterfaceComparator {
     protected boolean compareTrunkedVlan() {
         List<Message> detailedErrorMessages = new ArrayList<>();
         List<Message> detailedCorrectMessages = new ArrayList<>();
-        Collection res = CollectionUtils.removeAll(task.getTrunkedVlans(), getTrunkedVlans());
+        Collection res = CollectionUtils.removeAll(task.getTrunkedVlans(), config.getTrunkedVlans());
         if (res.isEmpty()) {
             MainWindowController.addCorrectMessage(new Message("All trunked Vlans present", MessageCode.INTERFACE_INFO_BRIEF), detailedCorrectMessages);
             return true;
@@ -45,8 +45,8 @@ class InterfaceComparator {
     protected boolean compareTaggedVlans() {
         List<Message> detailedErrorMessages = new ArrayList<>();
         List<Message> detailedCorrectMessages = new ArrayList<>();
-        for (String s : getTaggedVlans()) {
-            if (task.getVlans().contains(s)) {
+        for (String s : task.getEffectiveVlans()) {
+            if (config.getTaggedVlans().contains(s)) {
                 detailedCorrectMessages.add(new Message("Vlan" + s + " has been tagged", MessageCode.INTERFACE_INFO_DETAIL));
             } else {
                 detailedErrorMessages.add(new Message("Vlan" + s + " has not been tagged", MessageCode.INTERFACE_ERROR_DETAIL));
@@ -57,49 +57,17 @@ class InterfaceComparator {
             return true;
         }
 
-        MainWindowController.addErrorMessage(new Message("Config missing tagged vlans", MessageCode.INTERFACE_ERROR_BRIEF), detailedErrorMessages);
+        MainWindowController.addErrorMessage(new Message("Config missing tagged Vlans", MessageCode.INTERFACE_ERROR_BRIEF), detailedErrorMessages);
         return false;
 
     }
 
 
-    private List<InterfaceItem> getInterfaceItems() {
-        List<InterfaceItem> interfaceItems = new ArrayList<>();
-        for (int i = 0; i < config.getConfigItems().size(); i++) {
-            ConfigItem configItem = config.getConfigItems().get(i);
-            if (configItem.type == ConfigItem.ItemType.INTERFACEITEM) {
-                InterfaceItem item = (InterfaceItem) configItem;
-                interfaceItems.add(item);
-            }
-        }
-        return interfaceItems;
-    }
 
-    private List<String> getTrunkedVlans() {
-        List<String> trunkedVlans = new ArrayList<>();
-        for (InterfaceItem i : getInterfaceItems()) {
-            if (i.getTrunkedVlans() != null) {
-                trunkedVlans.addAll(i.getTrunkedVlans());
-            }
-        }
-        return trunkedVlans;
-    }
 
-    private List<String> getTaggedVlans() {
-        List<String> vlans = new ArrayList<>();
-        for (InterfaceItem i : getInterfaceItems()) {
-            for (String s : i.getProps()) {
-                if (s.contains("switchport access vlan")) {
-                    if (!s.equals("switchport access vlan 1")) {
-                        vlans.add(s.substring(s.indexOf("n") + 2));
-                    }
-                }
-            }
-        }
-        //Remove duplicates
-        List<String> filteredVlans = vlans.stream().distinct().collect(Collectors.toList());
-        return filteredVlans;
-    }
+
+
+
 
 
 }

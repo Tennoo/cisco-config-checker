@@ -19,7 +19,7 @@ public class ConfigLoader {
             this.config = new Config(configFile.getName());
             readNextLine();
             while (currentLine != null) {
-                parseAndAddLines(currentLine);
+                parseAndAddLines();
             }
         } catch (FileNotFoundException e) {
             //Todo logger
@@ -36,16 +36,18 @@ public class ConfigLoader {
         }
     }
 
-    private void parseAndAddLines(String line) throws IOException {
-        if (!line.equals("!") && !line.equals("")) {
-            if (line.startsWith("interface") && !line.startsWith("interface Vlan")) {
-                parseInterface(line);
-            } else if (line.startsWith("interface Vlan")) {
-                parseVlan(line);
+    private void parseAndAddLines() throws IOException {
+        if (!currentLine.equals("!") && !currentLine.equals("")) {
+            if (currentLine.startsWith("interface") && !currentLine.startsWith("interface Vlan")) {
+                parseInterface();
+            } else if (currentLine.startsWith("interface Vlan")) {
+                parseVlan();
             } else {
-                config.addLine(line);
-
+                config.addLine(currentLine);
             }
+        }
+        if(!currentLine.startsWith("interface")) {
+            readNextLine();
         }
     }
 
@@ -55,26 +57,25 @@ public class ConfigLoader {
         return currentLine;
     }
 
-    private void parseInterface(String line) throws IOException {
-        String faName = line.substring(line.indexOf("interface "));
+    private void parseInterface() throws IOException {
+        String faName = currentLine.substring(currentLine.indexOf("interface "));
         ArrayList<String> portPropList = new ArrayList<>();
-        while (!readNextLine().startsWith("interface") && !line.equals("!")){
-            if(line.trim().startsWith("switchport")) {
-                String trimmedLine = line.trim();
+        while (!readNextLine().startsWith("interface")){
+            if(currentLine.trim().startsWith("switchport")) {
+                String trimmedLine = currentLine.trim();
                 portPropList.add(trimmedLine);
             }
         }
         config.setInterfaceProperties(faName, portPropList);
     }
 
-    private void parseVlan(String line) throws IOException {
-        String vlanName = line.substring(10);
+    private void parseVlan() throws IOException {
+        String vlanName = currentLine.substring(10);
         ArrayList<String> vlanSubCommands = new ArrayList<>();
-        while (!readNextLine().startsWith("interface") && !line.equals("!")) {
-            String trimmedLine = line.trim();
+        while (!readNextLine().startsWith("interface") && !currentLine.equals("!")) {
+            String trimmedLine = currentLine.trim();
             vlanSubCommands.add(trimmedLine);
         }
-        readNextLine();
         config.setVlanProperties(vlanName, vlanSubCommands);
     }
 
