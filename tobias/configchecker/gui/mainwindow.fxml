@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -72,7 +72,7 @@
          </font>
       </Text>
       <Separator fx:id="settingsSeparator" layoutX="400.0" layoutY="48.0" prefHeight="18.0" prefWidth="295.0" />
-      <JFXListView fx:id="briefMessageView" layoutX="439.0" layoutY="78.0" />
-      <JFXListView fx:id="detailedMessageView" layoutX="659.0" layoutY="78.0" />
+      <ListView fx:id="briefMessageView" layoutX="400.0" layoutY="215.0" onMouseClicked="#onBriefMessageViewItemClick" prefHeight="280.0" prefWidth="226.0" style="-fx-background-color: #343434;" styleClass="/style/app.css" />
+      <ListView fx:id="detailedMessageView" layoutX="695.0" layoutY="215.0" prefHeight="280.0" prefWidth="226.0" style="-fx-background-color: #2e3844;" />
    </children>
 </AnchorPane>

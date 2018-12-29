@@ -1,15 +1,13 @@
 package com.tobias.configchecker.gui;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
 import com.tobias.configchecker.config.comparator.ConfigComparator;
 import com.tobias.configchecker.config.ConfigLoader;
-import com.tobias.configchecker.config.message.Message;
-import com.tobias.configchecker.config.message.MessageCode;
 import com.tobias.configchecker.task.TaskLoader;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -22,14 +20,14 @@ public class MainWindowController {
     private JFXButton selectConfigButton;
 
     @FXML
-    private JFXListView briefMessageView;
+    private ListView briefMessageView;
 
     @FXML
-    private JFXListView detailedMessageView;
+    private ListView detailedMessageView;
 
     private static Stage stage;
-    private static HashMap<Message, List<Message>> errorMessages = new HashMap<>();
-    private static HashMap<Message, List<Message>> correctMessages = new HashMap<>();
+    private static HashMap<String, ObservableList<String>> errorMessages = new HashMap<>();
+    private static HashMap<String, List<String>> correctMessages = new HashMap<>();
     private File configFile = new File("C:\\Users\\ekonc\\Documents\\Switch0_startup-config.txt");
 
 
@@ -43,21 +41,23 @@ public class MainWindowController {
         configComparator.setTask(taskLoader.getTasksList().get(0));
         configComparator.setConfig(configLoader.getConfig());
         configComparator.compare();
-        for (Message m : errorMessages.keySet()) {
-            briefMessageView.getItems().add(m.getMessage());
-            detailedMessageView.getItems().add(errorMessages.get(m));
-
+        for(String m : errorMessages.keySet()){
+            briefMessageView.getItems().add(m);
         }
+    }
+
+    public void onBriefMessageViewItemClick(){
+        detailedMessageView.setItems(errorMessages.get(briefMessageView.getSelectionModel().getSelectedItem()));
 
     }
 
-    public static void addErrorMessage(Message brief, List<Message> detailed) {
+    public static void addErrorMessage(String brief, ObservableList<String> detailed) {
         if (brief != null || detailed != null) {
             errorMessages.put(brief, detailed);
         }
     }
 
-    public static void addCorrectMessage(Message brief, List<Message> detailed) {
+    public static void addCorrectMessage(String brief, List<String> detailed) {
         if (brief != null || detailed != null) {
             correctMessages.put(brief, detailed);
         }
@@ -72,7 +72,6 @@ public class MainWindowController {
         // this.configFile = fileChooser.showOpenDialog(stage);
         // ConfigLoader configLoader = new ConfigLoader();
         //configLoader.load(configFile);
-        //configLoader.getconfig();
     }
 
 }

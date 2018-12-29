@@ -30,5 +30,17 @@
 }
 
 
+.list-cell
+{
+    -fx-background-color: #2e3844;
+    -fx-text-fill: white;
+}
+.list-view .scroll-bar:vertical {
+    -fx-scale-y: 0;
+}
+
+
+
+
 
 
