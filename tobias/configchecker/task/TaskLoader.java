@@ -44,8 +44,6 @@ public class TaskLoader {
                 reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }catch (NullPointerException e){
-                System.out.println("close");
             }
 
         }
@@ -67,8 +65,8 @@ public class TaskLoader {
                 task.setVlanProperties(parseProperties(line));
             } else if (line.startsWith("trunk")) {
                 task.setTrunkProperties(parseProperties(line));
-            } else if (!line.equals("") || !line.startsWith("//")) {
-                task.addTaskCommand(new Command(line));
+            } else if (!line.equals("") && !line.startsWith("//")) {
+                task.addTaskCommand(line);
             }
 
         }

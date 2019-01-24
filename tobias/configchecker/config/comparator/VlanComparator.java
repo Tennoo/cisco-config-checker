@@ -7,77 +7,58 @@ import com.tobias.configchecker.task.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.collections4.CollectionUtils;
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.List;
+
 
 class VlanComparator {
     private Task task;
     private Config config;
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
 
-    public void setConfig(Config config) {
+    void configure(Task task, Config config) {
+        this.task = task;
         this.config = config;
     }
 
-    protected boolean compareVlan() {
+    void compare() {
+        hasCorrectProperties();
+        hasAllVlans();
+    }
+
+    private boolean hasIp() {
+        return config
+                .getVlanItemById("1")
+                .hasIp();
+    }
+
+    private void hasCorrectProperties() {
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
-        ObservableList<String> detailedCorrectMessages = FXCollections.observableArrayList();
-        int correctConfig = 0;
         for (VlanItem v : config.getVlanItems()) {
-            if (v.getName().equals("Vlan1")) {
-                // Todo simplified for()
-                for (int i = 0; i < task.getTaskCommand().size(); i++) {
-                    String prefix = task.getTaskCommand().get(i).getPrefix();
-                    if (prefix.equals("ip")) {
-                        if (v.hasIp()) {
-                            correctConfig++;
-                            detailedCorrectMessages.add("IP for switch has been set");
-                        } else {
-                            detailedErrorMessages.add("IP for the switch has not been set");
-                        }
-                    }
-                }
-            }
-            if (!v.isShutDown()) {
-                correctConfig++;
-                detailedCorrectMessages.add(v.getName() + " is online.");
-            } else {
-                detailedErrorMessages.add(v.getName() + " is shutdown");
+            if (v.isShutDown()) {
+                detailedErrorMessages.add(v.getName() + "is offline");
             }
         }
-        // Add +1 to accommodate for Vlan 1 configuration
-        boolean isCorrect = (correctConfig == config.getVlanItems().size() + 1);
-        if (isCorrect) {
-            MainWindowController.addCorrectMessage("Vlans have been correctly configured", detailedCorrectMessages);
-            return true;
+        if (task.hasCommand("ip")) {
+            if (!hasIp()) {
+                detailedErrorMessages.add("IP has not been set");
+            }
         }
-        MainWindowController.addErrorMessage("Some vlans have been misconfigured", detailedErrorMessages);
-        return false;
+        if (detailedErrorMessages.size() > 0) {
+            MainWindowController.addErrorMessage("Vlans has not been configured properly", detailedErrorMessages);
+        }
     }
 
-    protected boolean hasAllVlans() {
+
+    private void hasAllVlans() {
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
-        ObservableList<String> detailedCorrectMessages = FXCollections.observableArrayList();
-        Collection res = CollectionUtils.removeAll(task.getVlans(),config.getVlanItemId());
-        if(res.isEmpty()){
-            MainWindowController.addCorrectMessage("Config has all Vlans present", detailedCorrectMessages);
-            return true;
+        Collection res = CollectionUtils.removeAll(task.getVlans(), config.getVlanItemId());
+        for (Object o : res) {
+            detailedErrorMessages.add("Vlan" + o + " is missing from the config file");
         }
-        else{
-            for(Object o : res){
-                detailedErrorMessages.add("Vlan" + o + " is missing from the config file");
-            }
-                MainWindowController.addErrorMessage("Config is missing Vlans", detailedErrorMessages);
-            return false;
+        if (detailedErrorMessages.size() > 0) {
+            MainWindowController.addErrorMessage("Config is missing Vlans", detailedErrorMessages);
         }
     }
-
-
-
-
 }
 

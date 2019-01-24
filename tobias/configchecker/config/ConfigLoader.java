@@ -1,8 +1,6 @@
 package com.tobias.configchecker.config;
 
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.util.ArrayList;
 

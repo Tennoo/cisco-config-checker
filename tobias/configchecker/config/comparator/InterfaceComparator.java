@@ -6,64 +6,47 @@ import com.tobias.configchecker.task.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.collections4.CollectionUtils;
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.List;
 
 class InterfaceComparator {
 
     private Config config;
     private Task task;
 
-    public void setConfig(Config config) {
+    void configure(Task task, Config config) {
+        this.task = task;
         this.config = config;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    void compare() {
+        compareTaggedVlans();
+        compareTrunkedVlan();
     }
 
-    protected boolean compareTrunkedVlan() {
+    private void compareTrunkedVlan() {
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
-        ObservableList<String> detailedCorrectMessages = FXCollections.observableArrayList();
         Collection res = CollectionUtils.removeAll(task.getTrunkedVlans(), config.getTrunkedVlans());
-        if (res.isEmpty()) {
-            MainWindowController.addCorrectMessage("All trunked Vlans present", detailedCorrectMessages);
-            return true;
-        }
         for (Object o : res) {
             detailedErrorMessages.add("Vlan" + o + " has not been trunked");
         }
-        MainWindowController.addErrorMessage("Config is missing trunked Vlans",detailedErrorMessages);
-        return false;
+        if (detailedErrorMessages.size() != 0) {
+            MainWindowController.addErrorMessage("Config is missing trunked Vlans", detailedErrorMessages);
+        }
     }
 
-    protected boolean compareTaggedVlans() {
+    private void compareTaggedVlans() {
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
-        ObservableList<String> detailedCorrectMessages = FXCollections.observableArrayList();
         for (String s : task.getEffectiveVlans()) {
-            if (config.getTaggedVlans().contains(s)) {
-                detailedCorrectMessages.add("Vlan" + s + " has been tagged");
-            } else {
+            if (!config.getTaggedVlans().contains(s)) {
                 detailedErrorMessages.add("Vlan" + s + " has not been tagged");
             }
         }
-        if (detailedErrorMessages.size() == 0) {
-            MainWindowController.addCorrectMessage("Vlans properly tagged", detailedCorrectMessages);
-            return true;
+        if (detailedErrorMessages.size() > 0) {
+            MainWindowController.addErrorMessage("Config missing tagged Vlans", detailedErrorMessages);
         }
 
-        MainWindowController.addErrorMessage("Config missing tagged Vlans", detailedErrorMessages);
-        return false;
-
     }
-
-
-
-
-
-
-
 
 
 }

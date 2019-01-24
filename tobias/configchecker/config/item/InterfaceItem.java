@@ -16,18 +16,6 @@ public class InterfaceItem extends ConfigItem {
         this.type = ItemType.INTERFACEITEM;
     }
 
-    public boolean hasProperty(String property) {
-        if (props == null) {
-            return false;
-        }
-        for (String s : props) {
-            if (s.contains(property)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public String getName() {
         return name;
     }

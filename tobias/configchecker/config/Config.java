@@ -4,7 +4,8 @@ import com.tobias.configchecker.config.item.ConfigItem;
 import com.tobias.configchecker.config.item.InterfaceItem;
 import com.tobias.configchecker.config.item.VlanItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Config {
@@ -20,12 +21,11 @@ public class Config {
         this.name = name;
     }
 
-    protected void addLine(String line) {
-        lines.add(line);
+    protected void addLine(String line) { lines.add(line);
     }
 
-    protected List<String> getLines() {
-        return lines;
+    public List<String> getLines() {
+        return this.lines;
     }
 
     protected void setInterfaceProperties(String faPort, ArrayList<String> portConfig) {
@@ -56,6 +56,7 @@ public class Config {
         List<String> filteredVlans = vlans.stream().distinct().collect(Collectors.toList());
         return filteredVlans;
     }
+
 
     public List<String> getTrunkedVlans() {
         List<String> trunkedVlans = new ArrayList<>();
@@ -98,6 +99,12 @@ public class Config {
         }
         return ids;
     }
-
-
+    public VlanItem getVlanItemById(String id){
+        for(VlanItem v : getVlanItems()){
+            if(v.getId().equals(id)){
+                return v;
+            }
+        }
+        return null;
+    }
 }

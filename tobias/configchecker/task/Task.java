@@ -6,7 +6,7 @@ import java.util.List;
 public class Task {
 
     private String name;
-    private List<Command> taskCommand;
+    private List<String> taskCommand;
     private List<String> vlans;
     private List<String> trunkedVlans;
 
@@ -18,14 +18,13 @@ public class Task {
     }
 
 
-    //TODO public or protected?
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected void addTaskCommand(Command c){
-        if(c != null){
-            taskCommand.add(c);
+    protected void addTaskCommand(String line){
+        if(line != null){
+            taskCommand.add(line);
         }
     }
 
@@ -40,8 +39,30 @@ public class Task {
         }
     }
 
-    public List<Command> getTaskCommand(){
+    public List<String> getTaskCommands(){
         return taskCommand;
+    }
+    public List<String> getTaskCommandsByWildward(List<String> wildcards){
+        List<String> commands = new ArrayList<>();
+        for(String s : wildcards){
+            for(String c : getTaskCommands()){
+                if(c.contains(s)){
+                    commands.add(c);
+                }
+            }
+        }
+        return commands;
+    }
+
+    public boolean hasCommand(String command){
+        if(taskCommand != null) {
+            for (String s : taskCommand) {
+                if (s.contains(command)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public List<String> getVlans() {
