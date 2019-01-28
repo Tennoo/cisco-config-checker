@@ -21,23 +21,27 @@ public class Config {
         this.name = name;
     }
 
-    protected void addLine(String line) { lines.add(line);
+    public String getName(){
+        return this.name;
+    }
+
+    void addLine(String line) { lines.add(line);
     }
 
     public List<String> getLines() {
         return this.lines;
     }
 
-    protected void setInterfaceProperties(String faPort, ArrayList<String> portConfig) {
+     void setInterfaceProperties(String faPort, ArrayList<String> portConfig) {
         this.items.add(new InterfaceItem(faPort, portConfig));
 
     }
 
-    protected void setVlanProperties(String vlan, List<String> subCommand) {
+     void setVlanProperties(String vlan, List<String> subCommand) {
         this.items.add(new VlanItem(vlan, subCommand));
     }
 
-    public List<ConfigItem> getConfigItems() {
+     List<ConfigItem> getConfigItems() {
         return this.items;
     }
 
@@ -68,7 +72,7 @@ public class Config {
         return trunkedVlans;
     }
 
-    public List<InterfaceItem> getInterfaceItems() {
+     List<InterfaceItem> getInterfaceItems() {
         List<InterfaceItem> interfaceItems = new ArrayList<>();
         for (int i = 0; i < getConfigItems().size(); i++) {
             ConfigItem configItem = getConfigItems().get(i);
@@ -92,6 +96,7 @@ public class Config {
         return vlanItems;
     }
 
+
     public List<String> getVlanItemId(){
         List<String> ids = new ArrayList<>();
         for (VlanItem v : getVlanItems()){
@@ -107,4 +112,5 @@ public class Config {
         }
         return null;
     }
+
 }

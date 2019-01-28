@@ -48,6 +48,7 @@ public class TaskLoader {
 
         }
     }
+
     private String parseName(String line) {
         return line.substring(5, line.length() - 1);
     }
@@ -82,6 +83,23 @@ public class TaskLoader {
 
     public List<Task> getTasksList() {
         return tasksList;
+    }
+
+    public List<String> getTaskNames(){
+        List<String> list = new ArrayList<>();
+        for(Task t: getTasksList()){
+            list.add(t.getName());
+        }
+        return list;
+    }
+
+    public Task getTaskByName(String name){
+        for(Task t : getTasksList()){
+            if(t.getName().equals(name)){
+                return t;
+            }
+        }
+        return null;
     }
 
 }

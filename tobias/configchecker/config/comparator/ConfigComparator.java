@@ -21,12 +21,8 @@ public class ConfigComparator {
         this.vlanComparator = new VlanComparator();
         this.interfaceComparator = new InterfaceComparator();
     }
-
-    public void setTask(Task task) {
+    public void configure(Task task, Config config){
         this.task = task;
-    }
-
-    public void setConfig(Config config) {
         this.config = config;
     }
 

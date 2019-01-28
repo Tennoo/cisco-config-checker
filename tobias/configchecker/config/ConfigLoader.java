@@ -1,6 +1,4 @@
 package com.tobias.configchecker.config;
-
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -12,8 +10,8 @@ public class ConfigLoader {
 
     public void load(File configFile) {
         //Todo try with resources.
-        try {
-            this.reader = new BufferedReader(new FileReader(configFile));
+        try(BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
+            this.reader = reader;
             this.config = new Config(configFile.getName());
             readNextLine();
             while (currentLine != null) {
@@ -23,15 +21,20 @@ public class ConfigLoader {
             //Todo logger
         } catch (IOException e) {
             //Todo logger
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                //Todo logger
-            }
         }
+    }
+
+
+
+    private boolean validate(Config config){
+        if(this.config.getVlanItems() == null || this.config.getInterfaceItems() == null){
+            return false;
+        }
+        return true;
+    }
+
+    public int getLineNumber() {
+        return this.lineNumber;
     }
 
     private void parseAndAddLines() throws IOException {

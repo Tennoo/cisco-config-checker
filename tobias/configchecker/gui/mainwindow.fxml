@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.TreeView?>
@@ -16,17 +17,17 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1300.0" style="-fx-background-color: #2e3844;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tobias.configchecker.gui.MainWindowController">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="106.0" layoutY="170.0" prefHeight="42.0" prefWidth="137.0" ripplerFill="#656464" style="-fx-background-color: efb351;" text="Compare Config">
+      <JFXButton fx:id="conmpareConfigButton" buttonType="RAISED" layoutX="106.0" layoutY="170.0" prefHeight="42.0" prefWidth="137.0" ripplerFill="#656464" style="-fx-background-color: efb351;" text="Compare Config" onMouseClicked="#onCompareButtonClick">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="selectConfigButton" layoutX="42.0" layoutY="84.0" prefHeight="42.0" prefWidth="117.0" style="-fx-background-color: #515d6d;" text="Select Config File" textFill="WHITE">
+      <JFXButton fx:id="selectConfigButton" layoutX="42.0" layoutY="84.0" onMouseClicked="#onSelectFileClick" prefHeight="42.0" prefWidth="117.0" style="-fx-background-color: #515d6d;" text="Select Config File" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="taskSelector" focusColor="WHITE" labelFloat="true" layoutX="198.0" layoutY="77.0" prefHeight="42.0" prefWidth="117.0" promptText="Select Task" style="-fx-prompt-text-fill: white;" unFocusColor="#515d6d" />
+      <JFXComboBox fx:id="taskSelector" focusColor="WHITE" labelFloat="true" layoutX="185.0" layoutY="84.0" onAction="#onTaskItemSelect" prefHeight="42.0" prefWidth="174.0" promptText="Select Task" style="-fx-prompt-text-fill: white;" unFocusColor="#515d6d" />
       <TitledPane animated="false" layoutX="14.0" layoutY="278.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Task Specifications" textFill="WHITE">
          <font>
             <Font size="14.0" />
@@ -42,21 +43,43 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vlans:" />
+                  <Text fill="#e8dcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Vlans:" />
+                  <Text fill="#e8dcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Trunked Vlans:" GridPane.rowIndex="1" />
+                  <Text fill="#e8dcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Commands:" GridPane.rowIndex="2" />
+                  <Label fx:id="taskVlansLabel" text="N/A" textFill="#f5ff34" GridPane.columnIndex="1" />
+                  <Label fx:id="taskTrunkedVlansLabel" text="N/A" textFill="#f5ff34" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="taskCommandLabel" text="N/A" textFill="#f5ff34" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane animated="false" layoutX="14.0" layoutY="466.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Config Specifications" textFill="WHITE">
+      <TitledPane layoutX="14.0" layoutY="466.0" style="-fx-animated: true; -fx-border-color: #2e3844;" styleClass="/style/app.css" text="Config Specifications" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2e3844; -fx-border-color: #2e3844;" />
+            <GridPane prefHeight="99.0" prefWidth="317.0" style="-fx-background-color: #2e3844;">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="95.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="194.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="79.0" minWidth="0.0" prefWidth="0.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="13.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text fill="#e8dcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Config name:" />
+                  <Text fill="#e8dcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of lines" GridPane.rowIndex="1" />
+                  <Label fx:id="configNameLabel" prefHeight="17.0" prefWidth="192.0" text="N/A" textFill="#f5ff34" GridPane.columnIndex="1" />
+                  <Label fx:id="configLinesLabel" text="N/A" textFill="#f5ff34" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
          </content>
       </TitledPane>
       <Text fill="#e15b5b" layoutX="27.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" wrappingWidth="147.27734375">
@@ -73,7 +96,8 @@
          </font>
       </Text>
       <Separator fx:id="settingsSeparator" layoutX="400.0" layoutY="48.0" prefHeight="18.0" prefWidth="295.0" />
-      <TreeView fx:id="errorView" layoutX="415.0" layoutY="126.0" prefHeight="428.0" prefWidth="295.0" onMouseClicked="#onErrorItemClick"/>
-      <JFXListView layoutX="763.0" layoutY="126.0" prefHeight="428.0" prefWidth="200.0" fx:id="detailedErrorView"/>
+      <TreeView fx:id="errorView" layoutX="415.0" layoutY="126.0" onMouseClicked="#onErrorItemClick" prefHeight="428.0" prefWidth="295.0" />
+      <JFXListView fx:id="detailedErrorView" layoutX="763.0" layoutY="126.0" prefHeight="428.0" prefWidth="295.0" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>
