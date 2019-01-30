@@ -1,40 +1,34 @@
 
+.titled-pane > .title {
 
-.titled-pane > .title
-{
-
-    -fx-background-color:  transparent;
+    -fx-background-color: transparent;
 
 }
 
-.titled-pane
-{
+.titled-pane {
 
     -fx-text-fill: white;
 }
 
-
-.titled-pane > .content
-{
--fx-border-color:  #2e3844;
+.titled-pane > .content {
+    -fx-border-color: #2e3844;
 }
-.separator .line
-{
+
+.separator .line {
     -fx-border-color: #727e91;
     -fx-border-width: 2px;
     -fx-border-radius: 10 10 10 10;
 }
-#middleSeparator .line
-{
+
+#middleSeparator .line {
     -fx-border-color: #727e91;
 }
 
-
-.list-cell
-{
+.list-cell {
     -fx-background-color: #2e3844;
     -fx-text-fill: white;
 }
+
 .list-view .scroll-bar:vertical {
     -fx-scale-y: 0;
 }

@@ -1,4 +1,5 @@
-package com.tobias.configchecker.config;
+package com.ciscoconfigchecker.config;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class ConfigLoader {
 
     public void load(File configFile) {
         //Todo try with resources.
-        try(BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
             this.reader = reader;
             this.config = new Config(configFile.getName());
             readNextLine();
@@ -25,9 +26,8 @@ public class ConfigLoader {
     }
 
 
-
-    private boolean validate(Config config){
-        if(this.config.getVlanItems() == null || this.config.getInterfaceItems() == null){
+    private boolean validate(Config config) {
+        if (this.config.getVlanItems() == null || this.config.getInterfaceItems() == null) {
             return false;
         }
         return true;
@@ -47,7 +47,7 @@ public class ConfigLoader {
                 config.addLine(currentLine);
             }
         }
-        if(!currentLine.startsWith("interface")) {
+        if (!currentLine.startsWith("interface")) {
             readNextLine();
         }
     }
@@ -61,8 +61,8 @@ public class ConfigLoader {
     private void parseInterface() throws IOException {
         String faName = currentLine.substring(currentLine.indexOf("interface "));
         ArrayList<String> portPropList = new ArrayList<>();
-        while (!readNextLine().startsWith("interface")){
-            if(currentLine.trim().startsWith("switchport")) {
+        while (!readNextLine().startsWith("interface")) {
+            if (currentLine.trim().startsWith("switchport")) {
                 String trimmedLine = currentLine.trim();
                 portPropList.add(trimmedLine);
             }

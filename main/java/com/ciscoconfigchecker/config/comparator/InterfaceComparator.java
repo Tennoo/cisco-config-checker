@@ -1,8 +1,8 @@
-package com.tobias.configchecker.config.comparator;
+package com.ciscoconfigchecker.config.comparator;
 
-import com.tobias.configchecker.config.Config;
-import com.tobias.configchecker.gui.MainWindowController;
-import com.tobias.configchecker.task.Task;
+import com.ciscoconfigchecker.config.Config;
+import com.ciscoconfigchecker.gui.MainWindowController;
+import com.ciscoconfigchecker.task.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.collections4.CollectionUtils;

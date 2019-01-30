@@ -1,8 +1,8 @@
-package com.tobias.configchecker.gui;
+package com.ciscoconfigchecker.gui;
 
 
-import com.tobias.configchecker.config.Config;
-import com.tobias.configchecker.task.Task;
+import com.ciscoconfigchecker.config.Config;
+import com.ciscoconfigchecker.task.Task;
 
 class GuiInfoAPI {
 
@@ -12,13 +12,14 @@ class GuiInfoAPI {
     void setTask(Task task) {
         this.task = task;
     }
-    void setConfig(Config config){
+
+    void setConfig(Config config) {
         this.config = config;
     }
 
-     Object getTaskVlans(boolean asString){
-        if(asString){
-            return (String.join(", ",task.getVlans()));
+    Object getTaskVlans(boolean asString) {
+        if (asString) {
+            return (String.join(", ", task.getVlans()));
         }
         return task.getVlans();
     }
@@ -30,14 +31,13 @@ class GuiInfoAPI {
         return task.getTrunkedVlans();
     }
 
-    String getTaskCommands(){
-        return (String.join(", ",task.getTaskCommands()));
+    String getTaskCommands() {
+        return (String.join(", ", task.getTaskCommands()));
     }
 
-    String getConfigName(){
+    String getConfigName() {
         return config.getName();
     }
-
 
 
 }

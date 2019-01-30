@@ -1,11 +1,11 @@
-package com.tobias.configchecker.gui;
+package com.ciscoconfigchecker.gui;
 
+import com.ciscoconfigchecker.config.ConfigLoader;
+import com.ciscoconfigchecker.config.comparator.ConfigComparator;
+import com.ciscoconfigchecker.task.TaskLoader;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
-import com.tobias.configchecker.config.comparator.ConfigComparator;
-import com.tobias.configchecker.config.ConfigLoader;
-import com.tobias.configchecker.task.TaskLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.util.HashMap;
 
@@ -72,7 +71,7 @@ public class MainWindowController {
     private void setErrorMessages() {
         TreeItem<String> errorItem = new TreeItem<>("Errors");
         errorItem.setExpanded(true);
-        if(errorMessages.size() > 0) {
+        if (errorMessages.size() > 0) {
             for (String s : errorMessages.keySet()) {
                 errorItem.getChildren().addAll(new TreeItem(s));
             }

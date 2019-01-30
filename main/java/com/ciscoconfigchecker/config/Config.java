@@ -1,8 +1,8 @@
-package com.tobias.configchecker.config;
+package com.ciscoconfigchecker.config;
 
-import com.tobias.configchecker.config.item.ConfigItem;
-import com.tobias.configchecker.config.item.InterfaceItem;
-import com.tobias.configchecker.config.item.VlanItem;
+import com.ciscoconfigchecker.config.item.ConfigItem;
+import com.ciscoconfigchecker.config.item.InterfaceItem;
+import com.ciscoconfigchecker.config.item.VlanItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +21,28 @@ public class Config {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    void addLine(String line) { lines.add(line);
+    void addLine(String line) {
+        lines.add(line);
     }
 
     public List<String> getLines() {
         return this.lines;
     }
 
-     void setInterfaceProperties(String faPort, ArrayList<String> portConfig) {
+    void setInterfaceProperties(String faPort, ArrayList<String> portConfig) {
         this.items.add(new InterfaceItem(faPort, portConfig));
 
     }
 
-     void setVlanProperties(String vlan, List<String> subCommand) {
+    void setVlanProperties(String vlan, List<String> subCommand) {
         this.items.add(new VlanItem(vlan, subCommand));
     }
 
-     List<ConfigItem> getConfigItems() {
+    List<ConfigItem> getConfigItems() {
         return this.items;
     }
 
@@ -72,7 +73,7 @@ public class Config {
         return trunkedVlans;
     }
 
-     List<InterfaceItem> getInterfaceItems() {
+    List<InterfaceItem> getInterfaceItems() {
         List<InterfaceItem> interfaceItems = new ArrayList<>();
         for (int i = 0; i < getConfigItems().size(); i++) {
             ConfigItem configItem = getConfigItems().get(i);
@@ -97,16 +98,17 @@ public class Config {
     }
 
 
-    public List<String> getVlanItemId(){
+    public List<String> getVlanItemId() {
         List<String> ids = new ArrayList<>();
-        for (VlanItem v : getVlanItems()){
+        for (VlanItem v : getVlanItems()) {
             ids.add(v.getId());
         }
         return ids;
     }
-    public VlanItem getVlanItemById(String id){
-        for(VlanItem v : getVlanItems()){
-            if(v.getId().equals(id)){
+
+    public VlanItem getVlanItemById(String id) {
+        for (VlanItem v : getVlanItems()) {
+            if (v.getId().equals(id)) {
                 return v;
             }
         }

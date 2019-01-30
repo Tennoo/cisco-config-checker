@@ -1,4 +1,4 @@
-package com.tobias.configchecker.config.item;
+package com.ciscoconfigchecker.config.item;
 
 
 import java.util.Arrays;

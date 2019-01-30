@@ -1,4 +1,4 @@
-package com.tobias.configchecker.config.item;
+package com.ciscoconfigchecker.config.item;
 
 import java.util.List;
 
@@ -16,7 +16,8 @@ public class VlanItem extends ConfigItem {
     public String getName() {
         return name;
     }
-    public String getId(){
+
+    public String getId() {
         return name.substring(name.indexOf("n") + 1);
     }
 

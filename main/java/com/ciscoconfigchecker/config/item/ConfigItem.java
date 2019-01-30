@@ -1,6 +1,6 @@
-package com.tobias.configchecker.config.item;
+package com.ciscoconfigchecker.config.item;
 
- public class ConfigItem {
+public class ConfigItem {
 
     public ItemType type;
 

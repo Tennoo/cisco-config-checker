@@ -1,8 +1,8 @@
-package com.tobias.configchecker.config.comparator;
+package com.ciscoconfigchecker.config.comparator;
 
-import com.tobias.configchecker.config.Config;
-import com.tobias.configchecker.gui.MainWindowController;
-import com.tobias.configchecker.task.Task;
+import com.ciscoconfigchecker.config.Config;
+import com.ciscoconfigchecker.gui.MainWindowController;
+import com.ciscoconfigchecker.task.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,7 +21,8 @@ public class ConfigComparator {
         this.vlanComparator = new VlanComparator();
         this.interfaceComparator = new InterfaceComparator();
     }
-    public void configure(Task task, Config config){
+
+    public void configure(Task task, Config config) {
         this.task = task;
         this.config = config;
     }
@@ -37,10 +38,10 @@ public class ConfigComparator {
                 }
             }
         }
-        if(task.hasCommand("ip")){
+        if (task.hasCommand("ip")) {
             tempCommands.add("ip");
         }
-        Collection res = CollectionUtils.removeAll(task.getTaskCommands(),tempCommands);
+        Collection res = CollectionUtils.removeAll(task.getTaskCommands(), tempCommands);
         for (Object o : res) {
             detailedErrorMessages.add("Command " + "'" + o + "'" + " is missing from the config file");
         }
