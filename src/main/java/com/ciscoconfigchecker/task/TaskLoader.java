@@ -2,12 +2,10 @@ package com.ciscoconfigchecker.task;
 
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 
 public class TaskLoader {
     private File taskFile;
@@ -15,29 +13,30 @@ public class TaskLoader {
     private BufferedReader reader;
     private String currentLine;
 
-
     public TaskLoader() {
-        try {
-            this.taskFile = new File(this.getClass().getResource("/tasks.txt").toURI());
-        } catch (URISyntaxException e){e.printStackTrace();}
+        //TODO Error handling when no file
+        this.taskFile = new File("tasks.txt");
         this.tasksList = new ArrayList<>();
     }
 
-
-    public void load() {
-        try(BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
-            this.reader = reader;
-
-            while (currentLine != null) {
+    public void load() throws FileNotFoundException{
+        if (taskFile.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
+                this.reader = reader;
                 readNextLine();
-                if (currentLine.startsWith("Task")) {
-                    parseAndAddTask();
+                while (currentLine != null) {
+                    if (currentLine.startsWith("Task")) {
+                        parseAndAddTask();
+                    }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e){
-            e.printStackTrace();
+        } else {
+            throw new FileNotFoundException("Tasks.txt could not be found. Check installation direcectory");
         }
     }
+
     private String readNextLine() throws IOException {
         currentLine = reader.readLine();
         return currentLine;
@@ -45,6 +44,36 @@ public class TaskLoader {
 
     private String parseName(String line) {
         return line.substring(5, line.length() - 1);
+    }
+
+    public boolean validate() {
+        if (!validateTaskContent() || !validateTaskList()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateTaskList() {
+        if (tasksList.isEmpty()) {
+            return false;
+        }
+        return true;
+
+    }
+
+    private boolean validateTaskContent() {
+        StringBuilder sb = new StringBuilder("These tasks seems to be empty: ");
+        int count = 0;
+        for (Task t : tasksList) {
+            if (!t.validate()) {
+                sb.append(t.getName());
+                count++;
+            }
+        }
+        if (count > 0) {
+            return false;
+        }
+        return true;
     }
 
     private void parseAndAddTask() throws IOException {
@@ -63,6 +92,10 @@ public class TaskLoader {
             } else if (!currentLine.equals("") && !currentLine.startsWith("//")) {
                 task.addTaskCommand(currentLine);
             }
+            readNextLine();
+
+        }
+        if (currentLine.equals("}")) {
             readNextLine();
         }
         tasksList.add(task);

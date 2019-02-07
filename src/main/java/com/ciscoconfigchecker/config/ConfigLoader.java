@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class ConfigLoader {
     private Config config;
     private BufferedReader reader;
-    private int lineNumber = 0;
+    private int lineNumber;
     private String currentLine;
 
     public void load(File configFile) {
@@ -14,6 +14,7 @@ public class ConfigLoader {
         try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
             this.reader = reader;
             this.config = new Config(configFile.getName());
+            lineNumber = 0;
             readNextLine();
             while (currentLine != null) {
                 parseAndAddLines();

@@ -18,23 +18,24 @@ public class Task {
     }
 
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    protected void addTaskCommand(String line) {
+    void addTaskCommand(String line) {
         if (line != null) {
             taskCommand.add(line);
         }
     }
 
-    protected void setVlanProperties(List<String> ids) {
+
+    void setVlanProperties(List<String> ids) {
         if (!ids.isEmpty()) {
             vlans.addAll(ids);
         }
     }
 
-    protected void setTrunkProperties(List<String> ids) {
+    void setTrunkProperties(List<String> ids) {
         if (!ids.isEmpty()) {
             trunkedVlans.addAll(ids);
         }
@@ -80,6 +81,14 @@ public class Task {
             }
         }
         return efvlans;
+    }
+
+    boolean validate() {
+        if (trunkedVlans == null && vlans == null
+                && taskCommand == null) {
+            return false;
+        }
+        return true;
     }
 
     public List<String> getTrunkedVlans() {

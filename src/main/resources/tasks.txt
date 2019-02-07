@@ -6,4 +6,5 @@ trunk[10,20,30]
 }
 Task CiscoOppgave2{
 hostname
+ip
 }

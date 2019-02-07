@@ -14,7 +14,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -40,20 +43,33 @@ public class MainWindowController {
     private Label configNameLabel;
     @FXML
     private JFXComboBox taskSelector;
+    @FXML
+    private Label fileErrorLabel;
 
     private static Stage stage;
+    private static ArrayList ioErrorMessages = new ArrayList();
     private static HashMap<String, ObservableList<String>> errorMessages = new HashMap<>();
-    private GuiInfoAPI infoAPI = new GuiInfoAPI();
-    private TaskLoader taskLoader = new TaskLoader();
-    private ConfigLoader configLoader = new ConfigLoader();
+    private GuiInfoAPI infoAPI;
+    private TaskLoader taskLoader;
+    private ConfigLoader configLoader;
     private File configFile;
     private long fileLastModified;
 
     public void initialize() {
-        taskLoader.load();
+        this.infoAPI = new GuiInfoAPI();
+        this.taskLoader = new TaskLoader();
+        this.configLoader = new ConfigLoader();
+        fileErrorLabel.setText(null);
+
+                try {
+                taskLoader.load();
+            } catch (FileNotFoundException e){
+                fileErrorLabel.setText(e.getMessage());
+            }
         setTaskList();
 
     }
+
 
     public static void addErrorMessage(String brief, ObservableList<String> detailed) {
         if (brief != null && detailed != null) {
@@ -119,8 +135,8 @@ public class MainWindowController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Config File");
         this.configFile = fileChooser.showOpenDialog(stage);
-        fileLastModified = configFile.lastModified();
         if (configFile != null) {
+            fileLastModified = configFile.lastModified();
             setConfigFile();
         }
     }
@@ -139,12 +155,12 @@ public class MainWindowController {
             if (configFile.lastModified() > fileLastModified) {
                 setConfigFile();
             }
-        }
-        ConfigComparator configComparator = new ConfigComparator();
-        configComparator.configure(taskLoader.getTaskByName(getSelectedTaskAsString()), configLoader.getConfig());
-        configComparator.compare();
-        setErrorMessages();
+            ConfigComparator configComparator = new ConfigComparator();
+            configComparator.configure(taskLoader.getTaskByName(getSelectedTaskAsString()), configLoader.getConfig());
+            configComparator.compare();
+            setErrorMessages();
 
+        }
     }
 
 }

@@ -30,7 +30,7 @@ class InterfaceComparator {
         for (Object o : res) {
             detailedErrorMessages.add("Vlan" + o + " has not been trunked");
         }
-        if (detailedErrorMessages.size() != 0) {
+        if (detailedErrorMessages.size() > 0) {
             MainWindowController.addErrorMessage("Config is missing trunked Vlans", detailedErrorMessages);
         }
     }

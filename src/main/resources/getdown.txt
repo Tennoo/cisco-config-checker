@@ -1,0 +1,15 @@
+##############################################
+## GETDOWN UPDATER FOR CISCO CONFIG CHECKER ##
+## DO NOT EDIT FILE                         ##
+##############################################
+
+appbase = http://localhost/ciscocc
+code = ciscoconfigchecker.jar
+code = getdown-new.jar
+apparg = %APPDIR%
+jvmarg = -Dusername=\%ENV.USER%
+class = com.ciscoconfigchecker.App
+resource = tasks.txt
+
+## UI CONFIGURATION ##
+ui.name = Cisco Config Checker Updater
