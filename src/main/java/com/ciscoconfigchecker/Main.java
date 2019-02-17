@@ -15,7 +15,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         Parent root = new FXMLLoader().load(getClass().getResourceAsStream("/fxml/mainwindow.fxml"));
         primaryStage.setTitle("Cisco Config Checker");
         primaryStage.setScene(new Scene(root, 1300, 700));
@@ -26,6 +25,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        // Attempts to update the Getdown framework itself at launch. It will look for "getdown-new" on the fileserver, and then replace itself.
         if (args.length > 0) {
             final File appdir = new File(args[0]);
             new Thread() {

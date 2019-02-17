@@ -98,12 +98,20 @@
         <Separator fx:id="settingsSeparator" layoutX="400.0" layoutY="48.0" prefHeight="18.0" prefWidth="295.0" />
         <TreeView fx:id="errorView" layoutX="415.0" layoutY="126.0" onMouseClicked="#onErrorItemClick" prefHeight="428.0" prefWidth="295.0" />
         <JFXListView fx:id="detailedErrorView" layoutX="763.0" layoutY="126.0" prefHeight="428.0" prefWidth="295.0" />
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Label fx:id="fileErrorLabel" layoutX="42.0" layoutY="250.0" prefHeight="17.0" prefWidth="287.0" text="Label" textFill="#cd2121">
+      <Text fx:id="compareFailedText" fill="#e11212" layoutX="116.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cannot start compare!" visible="false" wrappingWidth="137.0000034570694">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
-      </Label>
+      </Text>
+      <Text fx:id="issueWasFoundText" fill="#fcfcfc" layoutX="37.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="issues were found, click" visible="false" wrappingWidth="127.13671875" />
+      <Text fx:id="hyperLinkText" fill="#0fff88" layoutX="170.0" layoutY="269.0" onMouseClicked="#onHyperLinkTextClick" strokeType="OUTSIDE" strokeWidth="0.0" text="HERE" underline="true" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Text>
+      <Text fx:id="informationText" fill="#fcfcfc" layoutX="206.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="for more information" visible="false" />
+      <Text fx:id="errorCountText" fill="#fcfcfc" layoutX="26.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="configFileNotTxt" fill="#ff1919" layoutX="60.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Must be .txt!" wrappingWidth="111.24023497104645" visible="false"/>
 
     </children>
 </AnchorPane>

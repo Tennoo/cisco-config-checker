@@ -1,5 +1,7 @@
 package com.ciscoconfigchecker.config;
 
+import com.ciscoconfigchecker.gui.MainWindowController;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -27,11 +29,21 @@ public class ConfigLoader {
     }
 
 
-    private boolean validate(Config config) {
-        if (this.config.getVlanItems() == null || this.config.getInterfaceItems() == null) {
-            return false;
+    public boolean validate() {
+        int count = 0;
+        if (this.config.getVlanItems().size() == 0){
+            MainWindowController.addConfigIoErrorMessage("Config is corrupt: No VLANS were found");
+            count++;
         }
-        return true;
+        if(this.config.getInterfaceItems().size() == 0){
+            MainWindowController.addConfigIoErrorMessage("Config is corrupt: No port config was found");
+            count++;
+        }
+        if (getLineNumber() == 0){
+            MainWindowController.addConfigIoErrorMessage("Config is corrupt: Config is empty");
+            count++;
+        }
+        return (count == 0);
     }
 
     public int getLineNumber() {

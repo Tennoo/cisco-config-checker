@@ -1,6 +1,8 @@
 package com.ciscoconfigchecker.task;
 
 
+import com.ciscoconfigchecker.gui.MainWindowController;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +21,7 @@ public class TaskLoader {
         this.tasksList = new ArrayList<>();
     }
 
-    public void load() throws FileNotFoundException{
+    public boolean load(){
         if (taskFile.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
                 this.reader = reader;
@@ -33,8 +35,10 @@ public class TaskLoader {
                 e.printStackTrace();
             }
         } else {
-            throw new FileNotFoundException("Tasks.txt could not be found. Check installation direcectory");
+            MainWindowController.addTaskIOErrorMessage("Tasks.txt could not be found. Check installation directory");
+            return false;
         }
+        return true;
     }
 
     private String readNextLine() throws IOException {
@@ -47,18 +51,14 @@ public class TaskLoader {
     }
 
     public boolean validate() {
-        if (!validateTaskContent() || !validateTaskList()) {
-            return false;
-        }
-        return true;
+        return validateTaskContent() && validateTaskList();
     }
 
     private boolean validateTaskList() {
-        if (tasksList.isEmpty()) {
-            return false;
+        if(tasksList.isEmpty()){
+            MainWindowController.addTaskIOErrorMessage("No tasks could be found. Verify task list!");
         }
-        return true;
-
+        return tasksList.isEmpty();
     }
 
     private boolean validateTaskContent() {
@@ -71,6 +71,7 @@ public class TaskLoader {
             }
         }
         if (count > 0) {
+            MainWindowController.addTaskIOErrorMessage(sb.toString());
             return false;
         }
         return true;
