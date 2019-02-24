@@ -17,7 +17,7 @@ As of version 1.0.0, Cisco Config Checker can check if:
 It will check these things dependent on what is specified in the assignment.
 
 ## How does it know what to check for?
- The programs bases its comparison on the `tasks.txt`. More information can be found here: (link here)
+ The programs bases its comparison on the `tasks.txt`. More information can be found here: [What is tasks.txt?](https://github.com/TobiasKrok/cisco-config-checker/wiki/What-is-tasks.txt%3F)
  
  
  ## Usage
