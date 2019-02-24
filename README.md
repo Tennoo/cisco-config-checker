@@ -37,6 +37,14 @@ You will then see that the config has been loaded in the **Config Specification*
   You will then see that the task has been loaded in the **Task Specification** section
   
   ![](https://i.imgur.com/afRBHwS.png)
+  
+  **4.** Click **Compare Config**. Errors found will be displayed in the boxes to the left.
+  ![](https://i.imgur.com/lHK6LKu.png)
+  
+  You can click on the messages to the left and more detailed messages will pop up to the right.
+  
+  **To solve issues found in the config, click (link here)**
+  
  ## Download
  
  To download the latest version, click (link here)
