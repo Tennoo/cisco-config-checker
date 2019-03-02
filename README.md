@@ -47,5 +47,5 @@ You will then see that the config has been loaded in the **Config Specification*
   
  ## Download
  
- To download the latest version, click (link here)
+ To download the latest version, click [here](https://github.com/TobiasKrok/cisco-config-checker/releases/download/1.0.0/CiscoConfigChecker_install.exe)
  
