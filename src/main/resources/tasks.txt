@@ -1,8 +1,9 @@
-Task CiscoOppgave1{
-hostname
-ip
-vlans[1,10,20,30]
-trunk[10,20,30]
+Task Cisco og HP{
+name Elev
+name Laerer
+name
+vlans[1,10,20]
+trunk[10,20]
 }
 Task CiscoOppgave2{
 hostname

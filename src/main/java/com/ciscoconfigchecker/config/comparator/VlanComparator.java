@@ -26,9 +26,18 @@ class VlanComparator {
     }
 
     private boolean hasIp() {
-        return config
-                .getVlanItemById("1")
-                .hasIp();
+        String taskIp;
+        if ((taskIp = task.getFullCommand("ip")) != null) {
+            if (taskIp.equals("ip")) {
+                return (config.getVlanItemById("1").getIp() != null);
+            } else {
+                String[] confIp = config.getVlanItemById("1").getIp().split(" ");
+                // Index two and three is IP + subnet mask. The full IP returned by getIp() would be "ip address xxxx xxxx".
+                // Index one would be "ip".
+                return ("ip " + confIp[2] + " " + confIp[3]).equals(taskIp);
+            }
+        }
+        return false;
     }
 
     private void hasCorrectProperties() {
@@ -40,11 +49,18 @@ class VlanComparator {
         }
         if (task.hasCommand("ip")) {
             if (!hasIp()) {
-                detailedErrorMessages.add("IP has not been set");
+                String ip;
+                if((ip = task.getFullCommand("ip")).length() > 2){
+                    String[] ipSplit = ip.split("\\s");
+                    detailedErrorMessages.add("The IP: " + ipSplit[1] + " " + ipSplit[2]
+                            + " must be set on Vlan 1");
+                } else {
+                    detailedErrorMessages.add("IP has not been set on Vlan 1");
+                }
             }
         }
         if (detailedErrorMessages.size() > 0) {
-            MainWindowController.addErrorMessage("Vlans has not been configured properly", detailedErrorMessages);
+            MainWindowController.addErrorMessage("Vlans have not been configured properly", detailedErrorMessages);
         }
     }
 

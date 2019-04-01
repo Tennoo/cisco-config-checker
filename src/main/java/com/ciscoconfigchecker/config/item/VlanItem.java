@@ -22,14 +22,17 @@ public class VlanItem extends ConfigItem {
     }
 
 
-    public boolean hasIp() {
+    public String getIp() {
         for (String s : props) {
             if (s.startsWith("ip")) {
-                return true;
+                return s;
             }
         }
-        return false;
+        return null;
     }
+
+
+
 
     public boolean isShutDown() {
         for (String s : props) {

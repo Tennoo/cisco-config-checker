@@ -30,7 +30,6 @@ public class ConfigComparator {
     private void compareCommands() {
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
         List<String> tempCommands = new ArrayList<>();
-
         for (String c : config.getLines()) {
             for (String t : task.getTaskCommands()) {
                 if (c.contains(t)) {
@@ -38,8 +37,9 @@ public class ConfigComparator {
                 }
             }
         }
+        // The checking of IP is not done here, it is done in the VLAN comparator class.
         if (task.hasCommand("ip")) {
-            tempCommands.add("ip");
+            tempCommands.add(task.getFullCommand("ip"));
         }
         Collection res = CollectionUtils.removeAll(task.getTaskCommands(), tempCommands);
         for (Object o : res) {

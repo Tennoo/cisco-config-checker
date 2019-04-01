@@ -20,11 +20,12 @@ class InterfaceComparator {
     }
 
     void compare() {
-        compareTaggedVlans();
+        compareUntaggedVlan();
         compareTrunkedVlan();
     }
 
     private void compareTrunkedVlan() {
+        //Todo what if VLAN does not exist?
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
         Collection res = CollectionUtils.removeAll(task.getTrunkedVlans(), config.getTrunkedVlans());
         for (Object o : res) {
@@ -35,15 +36,15 @@ class InterfaceComparator {
         }
     }
 
-    private void compareTaggedVlans() {
+    private void compareUntaggedVlan() {
         ObservableList<String> detailedErrorMessages = FXCollections.observableArrayList();
         for (String s : task.getEffectiveVlans()) {
             if (!config.getTaggedVlans().contains(s)) {
-                detailedErrorMessages.add("Vlan" + s + " has not been tagged");
+                detailedErrorMessages.add("Vlan" + s + " has not been untagged");
             }
         }
         if (detailedErrorMessages.size() > 0) {
-            MainWindowController.addErrorMessage("Config missing tagged Vlans", detailedErrorMessages);
+            MainWindowController.addErrorMessage("Config missing untagged Vlans", detailedErrorMessages);
         }
 
     }

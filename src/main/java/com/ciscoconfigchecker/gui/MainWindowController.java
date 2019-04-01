@@ -67,6 +67,7 @@ public class MainWindowController {
     private ConfigLoader configLoader;
     private File configFile;
     private long fileLastModified;
+    private boolean taskFileIsValid;
     private static List<String> configIOErrorMessages = new ArrayList<>();
     private static List<String> taskIOErrorMessages = new ArrayList<>();
     private static Stage mainWindowStage;
@@ -80,6 +81,7 @@ public class MainWindowController {
         this.taskLoader = new TaskLoader();
         this.configLoader = new ConfigLoader();
         taskLoader.load();
+        taskFileIsValid = taskLoader.validate();
         setTaskList();
         notifyIOErrorLabel();
 
@@ -99,7 +101,7 @@ public class MainWindowController {
     }
 
     private void setErrorMessages() {
-        TreeItem<String> errorItem = new TreeItem<>("Errors");
+        TreeItem<String> errorItem = new TreeItem<>("Misconfiguration");
         errorItem.setExpanded(true);
         if (errorMessages.size() > 0) {
             for (String s : errorMessages.keySet()) {
@@ -220,21 +222,20 @@ public class MainWindowController {
     }
 
     public void onCompareButtonClick() {
-        if(taskLoader.validate())
-            taskIOErrorMessages.clear();
-        if (getSelectedTaskAsString() != null && configLoader.getConfig() != null && configIsValid) {
-            if (errorMessages.size() > 0) {
-                errorMessages.clear();
-                detailedErrorView.getItems().clear();
+        if (taskFileIsValid) {
+            if (getSelectedTaskAsString() != null && configLoader.getConfig() != null && configIsValid) {
+                if (errorMessages.size() > 0) {
+                    errorMessages.clear();
+                    detailedErrorView.getItems().clear();
+                }
+                if (configFile.lastModified() > fileLastModified) {
+                    setConfigFile();
+                }
+                ConfigComparator configComparator = new ConfigComparator();
+                configComparator.configure(taskLoader.getTaskByName(getSelectedTaskAsString()), configLoader.getConfig());
+                configComparator.compare();
+                setErrorMessages();
             }
-            if (configFile.lastModified() > fileLastModified) {
-                setConfigFile();
-            }
-            ConfigComparator configComparator = new ConfigComparator();
-            configComparator.configure(taskLoader.getTaskByName(getSelectedTaskAsString()), configLoader.getConfig());
-            configComparator.compare();
-            setErrorMessages();
         }
     }
-
 }

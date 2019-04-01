@@ -14,19 +14,20 @@ public class TaskLoader {
     private List<Task> tasksList;
     private BufferedReader reader;
     private String currentLine;
+    private int timesReadSameLine = 0;
 
     public TaskLoader() {
-        //TODO Error handling when no file
         this.taskFile = new File("tasks.txt");
         this.tasksList = new ArrayList<>();
     }
 
-    public boolean load(){
+    public void load(){
         if (taskFile.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(taskFile))) {
                 this.reader = reader;
                 readNextLine();
-                while (currentLine != null) {
+                while (currentLine != null && timesReadSameLine < 2) {
+                    timesReadSameLine++;
                     if (currentLine.startsWith("Task")) {
                         parseAndAddTask();
                     }
@@ -36,13 +37,12 @@ public class TaskLoader {
             }
         } else {
             MainWindowController.addTaskIOErrorMessage("Tasks.txt could not be found. Check installation directory");
-            return false;
         }
-        return true;
     }
 
     private String readNextLine() throws IOException {
         currentLine = reader.readLine();
+        timesReadSameLine = 0;
         return currentLine;
     }
 
@@ -51,14 +51,25 @@ public class TaskLoader {
     }
 
     public boolean validate() {
-        return validateTaskContent() && validateTaskList();
+        boolean validated = true;
+        if(!validateTaskIP()){
+            validated = false;
+        }
+        if(!validateTaskContent()){
+            validated = false;
+        }
+        if(!validateTaskList()){
+            validated = false;
+        }
+        return validated;
     }
 
     private boolean validateTaskList() {
         if(tasksList.isEmpty()){
             MainWindowController.addTaskIOErrorMessage("No tasks could be found. Verify task list!");
+            return false;
         }
-        return tasksList.isEmpty();
+        return true;
     }
 
     private boolean validateTaskContent() {
@@ -66,7 +77,7 @@ public class TaskLoader {
         int count = 0;
         for (Task t : tasksList) {
             if (!t.validate()) {
-                sb.append(t.getName());
+                sb.append(t.getName() + ", ");
                 count++;
             }
         }
@@ -76,7 +87,19 @@ public class TaskLoader {
         }
         return true;
     }
-
+    private boolean validateTaskIP(){
+        boolean isValid = true;
+        for(Task t: tasksList){
+            if (t.getFullCommand("ip") != null && t.getFullCommand("ip").length() > 2){
+                String[] ip = t.getFullCommand("ip").split(" ");
+                if(ip.length < 3){
+                    MainWindowController.addTaskIOErrorMessage("Task IP subnet mask is not valid");
+                    isValid = false;
+                }
+            }
+        }
+        return isValid;
+    }
     private void parseAndAddTask() throws IOException {
         Task task = new Task(parseName(currentLine));
         readNextLine();
@@ -84,7 +107,7 @@ public class TaskLoader {
         //Todo error handling when no "}"
         //Todo kommentarer
         //Todo end of file reading error
-
+        //Todo what if VLAN does not exist?
         while (!currentLine.startsWith("Task") && !currentLine.equals("}")) {
             if (currentLine.startsWith("vlans")) {
                 task.setVlanProperties(parseProperties(currentLine));
@@ -94,7 +117,6 @@ public class TaskLoader {
                 task.addTaskCommand(currentLine);
             }
             readNextLine();
-
         }
         if (currentLine.equals("}")) {
             readNextLine();

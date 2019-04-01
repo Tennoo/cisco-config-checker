@@ -68,6 +68,17 @@ public class Task {
         return false;
     }
 
+    public String getFullCommand(String command){
+        if(taskCommand != null){
+            for (String s : taskCommand){
+                if(s.contains(command)){
+                    return s;
+                }
+            }
+        }
+        return null;
+    }
+
     public List<String> getVlans() {
         return vlans;
     }
@@ -84,11 +95,8 @@ public class Task {
     }
 
     boolean validate() {
-        if (trunkedVlans == null && vlans == null
-                && taskCommand == null) {
-            return false;
-        }
-        return true;
+        return !trunkedVlans.isEmpty() || !vlans.isEmpty()
+                || !taskCommand.isEmpty();
     }
 
     public List<String> getTrunkedVlans() {

@@ -12,7 +12,6 @@ public class ConfigLoader {
     private String currentLine;
 
     public void load(File configFile) {
-        //Todo try with resources.
         try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
             this.reader = reader;
             this.config = new Config(configFile.getName());
@@ -92,7 +91,6 @@ public class ConfigLoader {
         }
         config.setVlanProperties(vlanName, vlanSubCommands);
     }
-
     public Config getConfig() {
         return this.config;
     }
