@@ -135,8 +135,7 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <taskdef name="digest" classname="com.threerings.getdown.tools.DigesterTask"
-                                         classpath="maven.plugin.classpath"/>
+                                <taskdef name="digest" classname="com.threerings.getdown.tools.DigesterTask" classpath="maven.plugin.classpath"/>
                                 <digest appdir="${project.build.directory}/deployment"/>
                             </target>
                         </configuration>
@@ -166,7 +165,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.0</version>
+            <version>4.1</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
